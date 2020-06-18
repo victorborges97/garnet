@@ -1,0 +1,17 @@
+{
+  "name": "garnet-api-demo",
+  "version": "0.0.1",
+  "description": "API do App Garnet de Node.js & MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "João Victor Borges - Aluno SISTEMA DE INFORMAÇÃO",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
