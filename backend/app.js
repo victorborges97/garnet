@@ -13,5 +13,6 @@ app.use('/resource', rotaResource);
 app.use('/solicitation', rotaSolicitation);
 
 require('./src/controllers/authController')(app); // rota de usuario cadastro e authenticação
+require('./src/controllers/recursosController')(app); // rota de usuario cadastro e authenticação
 
 module.exports = app;
