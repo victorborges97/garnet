@@ -14,13 +14,15 @@ import styles from './styles'
 
 export default function Dashboard({navigation}) {
 
-  AsyncStorage.getItem('user', (err, result) => {
-    let dados = result
-    console.log(dados.name)
-  });
-  
+  const [Name,setName] = useState('');
   const [logo] = useState(new Animated.ValueXY({x: 244, y: 53}));
 
+  AsyncStorage.getItem('name', (err, result)=> {
+    if(result != null){
+      setName(JSON.parse(result))
+    }
+  });
+  
   return (
     <ScrollView style={styles.container}>
       <StatusBar hidden={true} />
@@ -39,7 +41,7 @@ export default function Dashboard({navigation}) {
             Gestor Acadêmico Redentor - Itaperuna
           </Text>
           <Text style={styles.textHeader2}>
-            Boa Noite, nome...
+            Boa Noite, {Name}
           </Text>
         </View>
 

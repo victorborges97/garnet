@@ -76,8 +76,6 @@ export default function Login({navigation}) {
         AsyncStorage.setItem('name', JSON.stringify(res.user.name));
         AsyncStorage.setItem('token', res.token);
 
-        console.log(res.user.name)
-
         navigation.navigate('Dashboard')
       } else{
         //Mensagem dos erros de senha, usuario e etc.

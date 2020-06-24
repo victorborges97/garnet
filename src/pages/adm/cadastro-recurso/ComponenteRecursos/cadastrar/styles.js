@@ -17,12 +17,6 @@ const styles = StyleSheet.create({
     marginTop: '10%',
     marginBottom:'10%'
   },
-  btnVoltarView: {
-    flex: 1,
-    width: '80%',
-    justifyContent: 'flex-end',
-    marginTop: '75%',
-  },
   textHeader: {
     textAlign: 'center',
     color: '#087E85',
@@ -42,14 +36,18 @@ const styles = StyleSheet.create({
     lineHeight: 19,
     marginTop: '1%',
   },
+  btnVoltarView: {
+    flex: 1,
+    width: '80%',
+    justifyContent: 'flex-end',
+    marginTop: '56%',
+  },
   btnVoltar: {
     backgroundColor:'#E4E4E4',
-    height: '90%',
     borderRadius: 8,
     alignItems:'center',
     justifyContent:'center',
     height: 45,
-    marginBottom: '2%'
   },
   textVoltar: {
     fontSize: 15,

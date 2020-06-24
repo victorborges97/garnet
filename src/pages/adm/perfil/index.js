@@ -6,15 +6,23 @@ import {
   TouchableOpacity,
   Animated,
   ScrollView,
+  TextInput,
+  SafeAreaView,
+  AsyncStorage
 } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 import styles from './styles';
 
 export default function Perfil({navigation}) {
 
+  const [Name,setName] = useState('');
   const [logo] = useState(new Animated.ValueXY({x: 244, y: 53}));
+
+  AsyncStorage.getItem('name', (err, result)=> {
+    if(result != null){
+      setName(JSON.parse(result))
+    }
+  });
   
   return (
     <ScrollView style={styles.container}>
@@ -35,7 +43,7 @@ export default function Perfil({navigation}) {
               Gestor Acadêmico Redentor - Itaperuna
             </Text>
             <Text style={styles.textHeader2}>
-              Boa Noite, nome...
+              Boa Noite, {Name}
             </Text>
           </View>
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View, 
   Text, 
@@ -10,22 +10,40 @@ import {
   FlatList,
   YellowBox,
   TextInput,
-  AsyncStorage
+  AsyncStorage,
+  ActivityIndicator,
+  RefreshControl
 } from 'react-native';
 
 import styles from './styles';
-import equipamentos from '../../equipamentos'
-import api from '../../../services/api/api.json'
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Cadastro({navigation}) {
-
-  const [logo] = useState(new Animated.ValueXY({x: 244, y: 53}));
-  const [data,setData] = useState('');
-  const [Name,setName] = useState('');
-
   YellowBox.ignoreWarnings([
     'VirtualizedLists should never be nested', // TODO: Remove when fixed
   ])
+
+  const [logo] = useState(new Animated.ValueXY({x: 244, y: 53}));
+  const [data,setData] = useState( );
+  const [Name,setName] = useState('');
+  const [inReload,setInReload] = useState(true);
+
+  AsyncStorage.getItem('name', (err, result)=> {
+    if(result != null){
+      setName(JSON.parse(result))
+    }
+  });
+  
+
+  const Refresh = () => {
+    if(inReload){
+      inLoggin()
+    }
+  }
+
+  useEffect(() => {
+    Refresh()
+  });
 
   function inLoggin() {
     //o ip vai mudar dependendo do ip da maquina que for roda o server
@@ -39,21 +57,29 @@ export default function Cadastro({navigation}) {
     //recebo a resposta do server
     .then(res=>res.json())
     .then ((res) => {
-      setData(res.data)
-      console.log(data)
-
+      setData(res)
+      setInReload(false)
     })
-    .done();//Não sei pra que.
-
+  }
+  function onRefresh() {
+    //Clear old data of the list
+    setData([]);
+    //Call the Service to get the latest data
+    inLoggin();
   }
 
   return (
-    <ScrollView style={styles.container}>
-      
+    <ScrollView 
+      style={styles.container}
+      refreshControl={
+      <RefreshControl 
+        refreshing={inReload}
+        onRefresh={onRefresh}
+      />}
+    >
       <StatusBar hidden={true} />
       <KeyboardAvoidingView style={styles.container2}>
         <View style={styles.header}>
-
           <Animated.Image 
             style={{
               width: logo.x,
@@ -98,7 +124,7 @@ export default function Cadastro({navigation}) {
             </TouchableOpacity>
             <TouchableOpacity 
               style={styles.btnbarrapesquisa}
-              onPress={ ()=>inLoggin()}
+              onPress={ ()=>{} }
               ><Text style={styles.textBtn}>Consultar</Text>
             </TouchableOpacity>
             <TouchableOpacity 
@@ -112,25 +138,40 @@ export default function Cadastro({navigation}) {
             <Text style={styles.textRecurso}>Recursos</Text>
           </View>
           
-          <View style={styles.viewFlatList}>
+          
+            {inReload
+              ?
+              <View style={styles.viewFlatList}>
+                <ActivityIndicator 
+                  size="large" 
+                  color="#087E85" 
+                  style={{ 
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flex: 1,
+                  }}
+                />
+              </View>
+              :
+              <SafeAreaView style={styles.viewFlatList}>
                 <View style={styles.barraDescricao}>
-                <Text style={styles.textDesc}>Descrição</Text>
-                <Text style={styles.textBarraDescricao}>QT/dia</Text>
-                <Text style={styles.textDesc}>Status</Text>
+                  <Text style={styles.textDesc}>Descrição</Text>
+                  <Text style={styles.textBarraDescricao}>QT/dia</Text>
+                  <Text style={styles.textDesc}>Status</Text>
                 </View>
                 <FlatList 
-                data={data}
-                renderItem={( {item} ) => 
-                    <TouchableOpacity onPress={ ()=> navigation.navigate('EditarRecurso') } style={styles.flatList}>
-                    <Text style={styles.test1}>{item.descricao}</Text>
-                    <Text style={styles.test2}>{item.qtde}</Text>
-                    <Text style={styles.test3}>{item.status}</Text>
-                    </TouchableOpacity>
-                }
-                keyExtractor={item => item.id}
+                  data={data}
+                  renderItem={( {item} ) => 
+                      <TouchableOpacity onPress={ ()=> navigation.navigate('EditarRecurso') } style={styles.flatList}>
+                      <Text style={styles.test1} numberOfLines={1}>{item.descricao}</Text>
+                      <Text style={styles.test2}>{item.qtde}</Text>
+                      <Text style={styles.test3}>{item.status}</Text>
+                      </TouchableOpacity>
+                  }
+                  keyExtractor={item => item._id}
                 />
-
-          </View>
+              </SafeAreaView>
+            }
           
         </View>
 

@@ -50,7 +50,7 @@ export default function CadastrarRecurso({navigation}) {
         <View style={styles.ViewDados}>
 
           <View style={styles.ViewTextHeader}>
-            <Text style={styles.TextHeaderDados}>Cadastrar Recurso</Text>
+            <Text style={styles.TextHeaderDados}>Novo Recurso</Text>
           </View>
 
           <View style={styles.Descricao}>
