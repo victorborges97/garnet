@@ -11,12 +11,16 @@ import {
   Animated,
   Keyboard,
   StatusBar,
+  AsyncStorage,
+  Alert
 } from 'react-native';
 
 export default function Login({navigation}) {
   
   const [logo] = useState(new Animated.ValueXY({x: 309, y: 201}));
-  
+  const [usuario,setUsuario] = useState('')
+  const [password,setPassword] = useState('')
+
   useEffect(()=> {
     //aqui pegamos a informação quando o teclado abre(Show) e fecha(Hide)
     keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', keyboardDidShow)
@@ -49,6 +53,52 @@ export default function Login({navigation}) {
       }),
     ]).start();
   }
+
+  function inLoggin() {
+    //o ip vai mudar dependendo do ip da maquina que for roda o server
+    fetch("http://20.0.50.51:3000/auth/authenticate", {
+      method:"POST",
+      //aqui vou poder mandar o token para alguma requisição
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "usuario":usuario,
+        "password":password
+      })
+    })
+    //recebo a resposta do server
+    .then(res=>res.json())
+    .then ((res) => {
+      if(res.success === true) {
+        //salvando os dados no LocalStorage
+        AsyncStorage.setItem('user', JSON.stringify(res.user));
+        AsyncStorage.setItem('name', JSON.stringify(res.user.name));
+        AsyncStorage.setItem('token', res.token);
+
+        console.log(res.user.name)
+
+        navigation.navigate('Dashboard')
+      } else{
+        //Mensagem dos erros de senha, usuario e etc.
+        Alert.alert(
+          "Mensagem",
+          `${res.message}`,
+          [
+            {
+              text: "Cancel",
+              onPress: () => console.log("Cancel Pressed"),
+              style: "cancel"
+            },
+            { text: "OK", onPress: () => console.log("OK Pressed") }
+          ],
+          { cancelable: false }
+        );
+      }
+    })
+    .done();//Não sei pra que.
+
+  }
   return (
 
     <KeyboardAvoidingView style={styles.container}>
@@ -75,8 +125,9 @@ export default function Login({navigation}) {
               style={{color:'#525252'}}
               style={styles.input} 
               placeholder="Usuário"
-              autoCorrect={false} 
-              onChangeText={()=> {}}
+              autoCorrect={false}
+              value={usuario} 
+              onChangeText={(text) => {setUsuario(text)}}
               />
 
             <TextInput 
@@ -84,13 +135,14 @@ export default function Login({navigation}) {
               secureTextEntry={true} 
               style={styles.input} 
               placeholder="Senha" 
-              autoCorrect={false} 
-              onChangeText={()=> {}}
+              autoCorrect={false}
+              value={password} 
+              onChangeText={(text) => {setPassword(text)}}
               />
 
             <TouchableOpacity 
               style={styles.btnSubmit}
-              onPress={ ()=>navigation.navigate('Dashboard')}
+              onPress={ () => inLoggin()/*navigation.navigate('Dashboard')*/}
             > 
               <Text style={styles.textSubmit}>Acessar</Text>
             </TouchableOpacity>

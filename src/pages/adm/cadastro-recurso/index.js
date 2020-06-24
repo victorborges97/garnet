@@ -9,7 +9,8 @@ import {
   StatusBar,
   FlatList,
   YellowBox,
-  TextInput
+  TextInput,
+  AsyncStorage
 } from 'react-native';
 
 import styles from './styles';
@@ -19,10 +20,32 @@ import api from '../../../services/api/api.json'
 export default function Cadastro({navigation}) {
 
   const [logo] = useState(new Animated.ValueXY({x: 244, y: 53}));
+  const [data,setData] = useState('');
+  const [Name,setName] = useState('');
+
   YellowBox.ignoreWarnings([
     'VirtualizedLists should never be nested', // TODO: Remove when fixed
   ])
 
+  function inLoggin() {
+    //o ip vai mudar dependendo do ip da maquina que for roda o server
+    fetch("http://20.0.50.51:3000/recursos/api", {
+      method:"GET",
+      //aqui vou poder mandar o token para alguma requisição
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    //recebo a resposta do server
+    .then(res=>res.json())
+    .then ((res) => {
+      setData(res.data)
+      console.log(data)
+
+    })
+    .done();//Não sei pra que.
+
+  }
 
   return (
     <ScrollView style={styles.container}>
@@ -43,7 +66,7 @@ export default function Cadastro({navigation}) {
             Gestor Acadêmico Redentor - Itaperuna
           </Text>
           <Text style={styles.textHeader2}>
-            Boa Noite, nome...
+            Boa Noite, {Name}
           </Text>
         </View>
 
@@ -75,7 +98,7 @@ export default function Cadastro({navigation}) {
             </TouchableOpacity>
             <TouchableOpacity 
               style={styles.btnbarrapesquisa}
-              onPress={ ()=>{}}
+              onPress={ ()=>inLoggin()}
               ><Text style={styles.textBtn}>Consultar</Text>
             </TouchableOpacity>
             <TouchableOpacity 
@@ -96,18 +119,18 @@ export default function Cadastro({navigation}) {
                 <Text style={styles.textDesc}>Status</Text>
                 </View>
                 <FlatList 
-                data={api}
+                data={data}
                 renderItem={( {item} ) => 
                     <TouchableOpacity onPress={ ()=> navigation.navigate('EditarRecurso') } style={styles.flatList}>
-                    <Text style={styles.test1}>{item.title}</Text>
-                    <Text style={styles.test2}>{item.qt}</Text>
-                    <Text style={styles.test3}>{item.stts}</Text>
+                    <Text style={styles.test1}>{item.descricao}</Text>
+                    <Text style={styles.test2}>{item.qtde}</Text>
+                    <Text style={styles.test3}>{item.status}</Text>
                     </TouchableOpacity>
                 }
                 keyExtractor={item => item.id}
                 />
 
-            </View>
+          </View>
           
         </View>
 

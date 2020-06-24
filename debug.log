@@ -1,4 +1,0 @@
-[0621/185341.638:ERROR:process_info.cc(359)] UncheckedAllocate
-[0621/185341.652:ERROR:file_io.cc(134)] WriteFile: Espaço insuficiente no disco. (0x70)
-[0621/185341.652:ERROR:crash_report_exception_handler.cc(111)] WriteEverything failed
-[0621/185341.653:ERROR:filesystem_win.cc(148)] DeleteFile C:\Users\FamiliaBorges\AppData\Local\Google\Chrome\User Data\Crashpad\reports\3191df93-c488-4d6d-abdc-9c26c5e1221a.dmp: O arquivo já está sendo usado por outro processo. (0x20)

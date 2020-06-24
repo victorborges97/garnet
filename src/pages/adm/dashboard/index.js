@@ -6,13 +6,19 @@ import {
   TouchableOpacity,
   Animated,
   StatusBar,
-  ScrollView
+  ScrollView,
+  AsyncStorage
 } from 'react-native';
 
 import styles from './styles'
 
 export default function Dashboard({navigation}) {
 
+  AsyncStorage.getItem('user', (err, result) => {
+    let dados = result
+    console.log(dados.name)
+  });
+  
   const [logo] = useState(new Animated.ValueXY({x: 244, y: 53}));
 
   return (
