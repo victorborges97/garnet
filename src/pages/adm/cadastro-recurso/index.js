@@ -12,11 +12,12 @@ import {
   TextInput,
   AsyncStorage,
   ActivityIndicator,
-  RefreshControl
+  RefreshControl,
+  SafeAreaView
 } from 'react-native';
 
 import styles from './styles';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { base_URL_recursos } from '../../../services/api'
 
 export default function Cadastro({navigation}) {
   YellowBox.ignoreWarnings([
@@ -47,7 +48,7 @@ export default function Cadastro({navigation}) {
 
   function inLoggin() {
     //o ip vai mudar dependendo do ip da maquina que for roda o server
-    fetch("http://20.0.50.51:3000/recursos/api", {
+    fetch(base_URL_recursos, {
       method:"GET",
       //aqui vou poder mandar o token para alguma requisição
       headers: {

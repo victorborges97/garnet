@@ -14,7 +14,6 @@ import Cadastro from './src/pages/adm/cadastro-recurso/index';
 import Solicitacao from './src/pages/adm/solicitacoes/index';
 import EditarRecurso from './src/pages/adm/cadastro-recurso/ComponenteRecursos/editar/index';
 import CadastrarRecurso from './src/pages/adm/cadastro-recurso/ComponenteRecursos/cadastrar';
-import LoadingScreen from './src/pages/LoadingScreen';
 
 
 export default function App() {

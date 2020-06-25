@@ -13,6 +13,8 @@ import {
 
 import styles from './styles';
 
+//import { base_URL_authenticate } from './services/api'
+
 export default function Perfil({navigation}) {
 
   const [Name,setName] = useState('');

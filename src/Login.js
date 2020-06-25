@@ -15,6 +15,8 @@ import {
   Alert
 } from 'react-native';
 
+import { base_URL_authenticate } from './services/api'
+
 export default function Login({navigation}) {
   
   const [logo] = useState(new Animated.ValueXY({x: 309, y: 201}));
@@ -53,10 +55,9 @@ export default function Login({navigation}) {
       }),
     ]).start();
   }
-
   function inLoggin() {
     //o ip vai mudar dependendo do ip da maquina que for roda o server
-    fetch("http://20.0.50.51:3000/auth/authenticate", {
+    fetch(base_URL_authenticate, {
       method:"POST",
       //aqui vou poder mandar o token para alguma requisição
       headers: {

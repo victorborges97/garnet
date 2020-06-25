@@ -22,6 +22,10 @@ export default function Dashboard({navigation}) {
       setName(JSON.parse(result))
     }
   });
+
+  function inOutput() {
+    navigation.navigate('Login')
+  };
   
   return (
     <ScrollView style={styles.container}>
@@ -70,7 +74,7 @@ export default function Dashboard({navigation}) {
 
           <TouchableOpacity
             style={styles.btndashSair}
-            onPress={ ()=>navigation.navigate('Login')}
+            onPress={ ()=> inOutput()}
             > 
             <Text style={styles.textSubmitSair}>Sair</Text>
           </TouchableOpacity>
