@@ -8,7 +8,7 @@ import {
   ScrollView,
   TextInput,
   SafeAreaView,
-  AsyncStorage
+  AsyncStorage,
 } from 'react-native';
 
 import styles from './styles';
@@ -20,11 +20,64 @@ export default function Perfil({navigation}) {
   const [Name,setName] = useState('');
   const [logo] = useState(new Animated.ValueXY({x: 244, y: 53}));
 
-  AsyncStorage.getItem('name', (err, result)=> {
-    if(result != null){
-      setName(JSON.parse(result))
+  const [data,setData] = useState('');
+  //state de dados do usuario
+  const [usuario,setUsuario] = useState('');
+  const [nome,setNome] = useState('');
+  const [address,setAddress] = useState([]);
+  const [rua,setRua] = useState('');
+  const [bairro,setBairro] = useState('');
+  const [estado,setEstado] = useState('');
+  const [municipio,setMunicipio] = useState('');
+  const [ref,setRef] = useState('');
+  const [number,setNumber] = useState('');
+  const [cep,setCep] = useState('');
+  const [tel,setTel] = useState('');
+  const [email,setEmail] = useState('');
+
+  const [inReload,setInReload] = useState(true);
+  const Refresh = () => {
+    if(inReload){
+      BuscaDados()
     }
+  }
+
+  useEffect(() => {
+    Refresh()
+    setUsuario(data.usuario)
+    setNome(data.name)
+    setAddress(data.address)
+    dados()
   });
+  function dados() {
+    if(address != null){
+      setRua(address.rua)
+      setBairro(address.bairro)
+      setEstado(address.estado)
+      setMunicipio(address.municipio)
+      setRef(address.ref)
+      setNumber(address.number)
+      setCep(address.cep)
+      setTel(address.tel)
+      setEmail(address.email)
+      
+    }
+  }
+
+  function BuscaDados() {
+    AsyncStorage.getItem('name', (err, result)=> {
+      if(result != null){
+        setName(JSON.parse(result))
+      }
+    });
+    AsyncStorage.getItem('user', (err, result)=> {
+      if(result != null){
+      setData(JSON.parse(result))
+      }
+    });
+    setInReload(false)
+  }
+  
   
   return (
     <ScrollView style={styles.container}>
@@ -61,9 +114,9 @@ export default function Perfil({navigation}) {
               <View style={styles.ViewInput}>
                 <TextInput 
                   style={styles.input} 
-                  value="joaov"
+                  value={usuario}
                   autoCorrect={false} 
-                  onChangeText={()=> {}}
+                  onChangeText={(text) => {setUsuario(text)}}
                 />
               </View>
             </View>
@@ -74,7 +127,7 @@ export default function Perfil({navigation}) {
               <View style={styles.ViewInput}>
                 <TextInput 
                   style={styles.input} 
-                  value="João Victor Dutra de Oliveira Borges"
+                  value={nome}
                   autoCorrect={false} 
                   onChangeText={()=> {}}
                 />
@@ -87,7 +140,7 @@ export default function Perfil({navigation}) {
               <View style={styles.ViewInput}>
                 <TextInput 
                   style={styles.input} 
-                  value="zezezeze"
+                  value=""
                   autoCorrect={false} 
                   onChangeText={()=> {}}
                 />
@@ -100,7 +153,7 @@ export default function Perfil({navigation}) {
               <View style={styles.ViewInput}>
                 <TextInput 
                   style={styles.input} 
-                  value="xxxxxxxx"
+                  value=""
                   autoCorrect={false} 
                   onChangeText={()=> {}}
                 />
@@ -113,7 +166,7 @@ export default function Perfil({navigation}) {
               <View style={styles.ViewInput}>
                 <TextInput 
                   style={styles.input} 
-                  value="xxxxxxxx"
+                  value=""
                   autoCorrect={false} 
                   onChangeText={()=> {}}
                 />
@@ -139,7 +192,7 @@ export default function Perfil({navigation}) {
               <View style={styles.ViewInput}>
                 <TextInput 
                   style={styles.input} 
-                  value="JOAQUIM MARQUES VIANA"
+                  value={rua}
                   autoCorrect={false} 
                   onChangeText={()=> {}}
                 />
@@ -152,7 +205,7 @@ export default function Perfil({navigation}) {
               <View style={styles.ViewInput}>
                 <TextInput 
                   style={styles.input} 
-                  value="CENTRO"
+                  value={bairro}
                   autoCorrect={false} 
                   onChangeText={()=> {}}
                 />
@@ -165,7 +218,7 @@ export default function Perfil({navigation}) {
               <View style={styles.ViewInput}>
                 <TextInput 
                   style={styles.input} 
-                  value="RIO DE JANEIRO"
+                  value={estado}
                   autoCorrect={false} 
                   onChangeText={()=> {}}
                 />
@@ -178,7 +231,7 @@ export default function Perfil({navigation}) {
               <View style={styles.ViewInput}>
                 <TextInput 
                   style={styles.input} 
-                  value="Selecione..."
+                  value={municipio}
                   autoCorrect={false} 
                   onChangeText={()=> {}}
                 />
@@ -191,7 +244,7 @@ export default function Perfil({navigation}) {
               <View style={styles.ViewInput}>
                 <TextInput 
                   style={styles.input} 
-                  value="MORRO NOVA CAIXA DE AGUA CEDAE"
+                  value={ref}
                   autoCorrect={false} 
                   onChangeText={()=> {}}
                 />
@@ -204,7 +257,7 @@ export default function Perfil({navigation}) {
               <View style={styles.ViewInput}>
                 <TextInput 
                   style={styles.input} 
-                  value="135"
+                  value={number}
                   autoCorrect={false} 
                   onChangeText={()=> {}}
                 />
@@ -217,7 +270,7 @@ export default function Perfil({navigation}) {
               <View style={styles.ViewInput}>
                 <TextInput 
                   style={styles.input} 
-                  value="28300-000"
+                  value={cep}
                   autoCorrect={false} 
                   onChangeText={()=> {}}
                 />
@@ -230,7 +283,7 @@ export default function Perfil({navigation}) {
               <View style={styles.ViewInput}>
                 <TextInput 
                   style={styles.input} 
-                  value="(22) 99913-7392"
+                  value={tel}
                   autoCorrect={false} 
                   onChangeText={()=> {}}
                 />
@@ -243,9 +296,9 @@ export default function Perfil({navigation}) {
               <View style={styles.ViewInput}>
                 <TextInput 
                   style={styles.input} 
-                  value="avisual.joaovictor@redentor.edu.br"
+                  value={email}
                   autoCorrect={false} 
-                  onChangeText={()=> {}}
+                  onChangeText={setEmail}
                 />
               </View>
             </View>
