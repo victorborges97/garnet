@@ -12,7 +12,8 @@ import {
   Keyboard,
   StatusBar,
   AsyncStorage,
-  Alert
+  Alert,
+  Platform
 } from 'react-native';
 
 import { base_URL_authenticate } from './services/api'
@@ -24,10 +25,11 @@ export default function Login({navigation}) {
   const [password,setPassword] = useState('')
 
   useEffect(()=> {
-    //aqui pegamos a informação quando o teclado abre(Show) e fecha(Hide)
-    keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', keyboardDidShow)
-    keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', keyboardDidHide)
-
+    if (Platform.OS === "android") { 
+      //aqui pegamos a informação quando o teclado abre(Show) e fecha(Hide)
+      keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', keyboardDidShow)
+      keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', keyboardDidHide)
+    }
   })
 //função para animação da imagem logo, que diminiu ela com o teclado abre
   function keyboardDidShow(){

@@ -17,7 +17,7 @@ import {
 } from 'react-native';
 
 import styles from './styles';
-import { base_URL_recursos } from '../../../services/api'
+import { base_URL_DELETE_PUT_GET_POST_Recursos } from '../../../services/api'
 
 export default function Cadastro({navigation}) {
   YellowBox.ignoreWarnings([
@@ -48,7 +48,7 @@ export default function Cadastro({navigation}) {
 
   function inLoggin() {
     //o ip vai mudar dependendo do ip da maquina que for roda o server
-    fetch(base_URL_recursos, {
+    fetch(base_URL_DELETE_PUT_GET_POST_Recursos, {
       method:"GET",
       //aqui vou poder mandar o token para alguma requisição
       headers: {

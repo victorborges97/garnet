@@ -8,10 +8,6 @@ const rotaSolicitation = require('./src/routes/solicitation')   //importando a r
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use('/resource', rotaResource);
-
-app.use('/solicitation', rotaSolicitation);
-
 require('./src/controllers/authController')(app); // rota de usuario cadastro e authenticação
 require('./src/controllers/recursosController')(app); // rota de usuario cadastro e authenticação
 
