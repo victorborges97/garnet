@@ -8,20 +8,79 @@ import {
   ScrollView,
   StatusBar,
   TextInput,
-  Picker
+  Picker,
+  AsyncStorage
 } from 'react-native';
 
 import styles from './styles';
 
+import { base_URL_DELETE_PUT_GET_POST_Recursos } from '../../../../../services/api'
+import { Alert } from 'react-native';
+
 export default function CadastrarRecurso({navigation}) {
 
   const [logo] = useState(new Animated.ValueXY({x: 244, y: 53}));
-  /*YellowBox.ignoreWarnings([
-    'VirtualizedLists should never be nested', // TODO: Remove when fixed
-  ])*/
+
+  const [Name,setName] = useState('');
+  AsyncStorage.getItem('name', (err, result)=> {
+    if(result != null){
+      setName(JSON.parse(result))
+    }
+  });
 
   const [selectedValue, setSelectedValue] = useState("Selecione");
+  const [postText, setPostText] = useState('');
+  const [qtde, setQtde] = useState('');
   
+  function cadastrar() {
+    //o ip vai mudar dependendo do ip da maquina que for roda o server
+    fetch(base_URL_DELETE_PUT_GET_POST_Recursos, {
+      method:"POST",
+      //aqui vou poder mandar o token para alguma requisição
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "descricao":postText,
+		    "setor":selectedValue,
+		    "status":"Ativo",
+		    "qtde":qtde
+      })
+    })
+    //recebo a resposta do server
+    .then(res=>res.json())
+    .then ((res) => {
+      console.log(res)
+      if (res.error) {
+        Alert.alert(
+          "Mensagem",
+          `Recurso: "${postText}" ${res.error}`,
+          [
+            {
+              text: "Cancel",
+              onPress: () => {},
+              style: "cancel"
+            },
+            { text: "OK", onPress: () => {} }
+          ],
+          { cancelable: false }
+        );
+      } else {
+        Alert.alert(
+          "Mensagem",
+          `Foi adicionado: "${res.descr.descricao}" com sucesso!`,
+          [
+            { text: "OK", onPress: () => navigation.navigate('Cadastro') }
+          ]
+        );
+        setSelectedValue("Selecione")
+        setPostText('')
+        setQtde('')
+      }
+    })
+
+  }
+
   return (
     <ScrollView style={styles.container}>
       
@@ -41,7 +100,7 @@ export default function CadastrarRecurso({navigation}) {
             Gestor Acadêmico Redentor - Itaperuna
           </Text>
           <Text style={styles.textHeader2}>
-            Boa Noite, nome...
+            Boa Noite, {Name}
           </Text> 
         </View>
 
@@ -58,10 +117,9 @@ export default function CadastrarRecurso({navigation}) {
             <View style={styles.inputDescricao}>
               <TextInput 
                 style={styles.input} 
-                value=""
-                //placeholder=""
+                value={postText}
                 autoCorrect={false} 
-                onChangeText={()=> {}}
+                onChangeText={(itemValue, itemIndex) => setPostText(itemValue)}
               />
             </View>
           </View>
@@ -77,7 +135,7 @@ export default function CadastrarRecurso({navigation}) {
                 onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
               >
                 <Picker.Item label="Selecione" value="Selecione"></Picker.Item>
-                <Picker.Item label="Audio Visual" value="audiovisual"></Picker.Item>
+                <Picker.Item label="Audiovisual" value="Audiovisual"></Picker.Item>
                 <Picker.Item label="Administrativo" value="adm"></Picker.Item>
               </Picker>
             </View>
@@ -90,10 +148,9 @@ export default function CadastrarRecurso({navigation}) {
             <View style={styles.ViewInputQT}>
               <TextInput 
                 style={styles.inputQT} 
-                value=""
-                //placeholder=""
+                value={qtde}
                 autoCorrect={false} 
-                onChangeText={()=> {}}
+                onChangeText={(itemValue, itemIndex) => setQtde(itemValue)}
               />
             </View>
           </View>
@@ -102,7 +159,7 @@ export default function CadastrarRecurso({navigation}) {
 
             <TouchableOpacity 
               style={styles.btnGravar}
-              onPress={ ()=> {} }
+              onPress={ ()=> cadastrar() }
               > 
               <Text style={styles.textGravar}>Gravar</Text>
             </TouchableOpacity>

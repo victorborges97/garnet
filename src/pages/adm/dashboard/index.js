@@ -23,10 +23,10 @@ export default function Dashboard({navigation}) {
     }
   });
 
-  function inOutput() {
+  function Logout() {
+    AsyncStorage.clear()
     navigation.navigate('Login')
-  };
-  
+  }
   return (
     <ScrollView style={styles.container}>
       <StatusBar hidden={true} />
@@ -74,7 +74,7 @@ export default function Dashboard({navigation}) {
 
           <TouchableOpacity
             style={styles.btndashSair}
-            onPress={ ()=> inOutput()}
+            onPress={ ()=> Logout()}
             > 
             <Text style={styles.textSubmitSair}>Sair</Text>
           </TouchableOpacity>

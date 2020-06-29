@@ -13,7 +13,7 @@ router.post('/', async (req, res) => {
 
     try {
         if (await Recurso.findOne({ descricao }))
-            return res.status(400).send({ error: 'Recurso já existe.' });
+            return res.status(400).send({ error: 'já existe.' });
 
         const descr = await Recurso.create({ ...req.body });//adicionando isso (, user: req.userId) no campo ao lado adiciona o id do usuario que está criando esse recurso, se o controller estiver ativado.
 

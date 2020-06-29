@@ -8,20 +8,145 @@ import {
   ScrollView,
   StatusBar,
   TextInput,
-  Picker
+  Picker,
+  AsyncStorage,
+  Alert
 } from 'react-native';
 
 import styles from './styles';
 
-export default function EditarRecurso({navigation}) {
+import { base_URL_DELETE_PUT_GET_POST_Recursos } from '../../../../../services/api'
+
+export default function EditarRecurso({ route, navigation}) {
 
   const [logo] = useState(new Animated.ValueXY({x: 244, y: 53}));
   /*YellowBox.ignoreWarnings([
     'VirtualizedLists should never be nested', // TODO: Remove when fixed
   ])*/
+  const [Name,setName] = useState('');
+  AsyncStorage.getItem('name', (err, result)=> {
+    if(result != null){
+      setName(JSON.parse(result))
+    }
+  });
 
-  const [selectedValue, setSelectedValue] = useState("Selecione");
-  const [postText, setPostText] = useState('Adaptador HDMI - IPAD e IPHONE ANTIGO');
+  const [selectedValue, setSelectedValue] = useState('');
+  const [postText, setPostText] = useState('');
+  const [qtde, setQtde] = useState('');
+  const [status, setStatus] = useState('');
+  const [id, setId] = useState('');
+  const { itemId } = route.params;
+  const [inReload,setInReload] = useState(true);
+
+  const Refresh = () => {
+    if(inReload){
+      setPostText(itemId.descricao)
+      setSelectedValue(itemId.setor)
+      setQtde(itemId.qtde)
+      setId(itemId._id)
+      setStatus(itemId.status)
+    }
+  }
+
+  useEffect(()=> {
+    Refresh()
+    setInReload(false)
+  })
+  
+  function atualizar() {
+    //o ip vai mudar dependendo do ip da maquina que for roda o server
+    fetch(base_URL_DELETE_PUT_GET_POST_Recursos+id, {
+      method:"PUT",
+      //aqui vou poder mandar o token para alguma requisição
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "descricao":postText,
+		    "setor":selectedValue,
+		    "status":status,
+		    "qtde":qtde
+      })
+    })
+    //recebo a resposta do server
+    .then(res=>res.json())
+    .then ((res) => {
+      console.log(res)
+      if (res.error) {
+        Alert.alert(
+          "Mensagem",
+          `${res.error}`,
+          [
+            {
+              text: "Cancel",
+              onPress: () => {},
+              style: "cancel"
+            },
+            { text: "OK", onPress: () => {} }
+          ],
+          { cancelable: false }
+        );
+      } else {
+        Alert.alert(
+          "Mensagem",
+          `Foi Atualizado: "${res.descr.descricao}" com sucesso!`,
+        );
+        setSelectedValue("Selecione")
+        setPostText('')
+        setQtde('')
+        setTimeout(() => (
+          navigation.navigate('Cadastro')
+        ), 1500)
+      }
+    })
+
+  }
+
+  function delet() {
+    Alert.alert(
+      "Alerta",
+      "Tem certeza que deseja apagar esse recurso ?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => {},
+          style: "cancel"
+        },
+        { text: "Sim", onPress: () => deletar() }
+      ],
+      { cancelable: false }
+    );
+  }
+
+  function deletar() {
+    //o ip vai mudar dependendo do ip da maquina que for roda o server
+    fetch(base_URL_DELETE_PUT_GET_POST_Recursos+id, {
+      method:"DELETE",
+      //aqui vou poder mandar o token para alguma requisição
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    //recebo a resposta do server
+    .then(res=>res.json())
+    .then ((res) => {
+      if(res) {
+        Alert.alert(
+          "Mensagem",
+          `${res.message}`,
+          [
+            { text: "Sim", onPress: () => navigation.navigate('Cadastro') }
+          ]
+        );
+        setPostText('')
+        setSelectedValue('')
+        setQtde('')
+        setId('')
+        setStatus('')
+      }
+    })
+  }
+
   return (
     <ScrollView style={styles.container}>
       
@@ -41,7 +166,7 @@ export default function EditarRecurso({navigation}) {
             Gestor Acadêmico Redentor - Itaperuna
           </Text>
           <Text style={styles.textHeader2}>
-            Boa Noite, nome...
+            Boa Noite, {Name}
           </Text> 
         </View>
 
@@ -58,10 +183,10 @@ export default function EditarRecurso({navigation}) {
             <View style={styles.inputDescricao}>
               <TextInput 
                 style={styles.input} 
+                numberOfLines={1}
                 value={postText}
-                placeholder=""
                 autoCorrect={false} 
-                onChangeText={setPostText}
+                onChangeText={(itemValue, itemIndex) => setPostText(itemValue)}
               />
             </View>
           </View>
@@ -72,14 +197,29 @@ export default function EditarRecurso({navigation}) {
             </View>
             <View style={styles.inputSetor}>
               <Picker 
-                style={styles.input}
+                style={styles.inputSelect}
                 selectedValue={selectedValue}
                 onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
               >
                 <Picker.Item label="Selecione" value="Selecione"></Picker.Item>
-                <Picker.Item label="Audio Visual" value="audiovisual"></Picker.Item>
+                <Picker.Item label="Audiovisual" value="Audiovisual"></Picker.Item>
                 <Picker.Item label="Administrativo" value="adm"></Picker.Item>
               </Picker>
+            </View>
+          </View>
+ 
+          <View style={styles.Status}>
+            <View style={styles.ViewTextStts}>
+              <Text style={styles.textStts}>Status*: </Text>
+            </View>
+            <View style={styles.ViewInputStts}>
+              <TextInput 
+                style={styles.inputStatus} 
+                numberOfLines={1}
+                value={status}
+                autoCorrect={false} 
+                onChangeText={(itemValue, itemIndex) => setStatus(itemValue)}
+              />
             </View>
           </View>
 
@@ -90,10 +230,9 @@ export default function EditarRecurso({navigation}) {
             <View style={styles.ViewInputQT}>
               <TextInput 
                 style={styles.inputQT} 
-                value=""
-                placeholder="{1}"
+                value={qtde}
                 autoCorrect={false} 
-                onChangeText={()=> {}}
+                onChangeText={(itemValue, itemIndex) => setQtde(itemValue)}
               />
             </View>
           </View>
@@ -102,15 +241,15 @@ export default function EditarRecurso({navigation}) {
 
             <TouchableOpacity 
               style={styles.btnGravar}
-              onPress={ ()=> {} }
+              onPress={ ()=> atualizar() }
               > 
               <Text style={styles.textGravar}>Gravar</Text>
             </TouchableOpacity>
             <TouchableOpacity 
               style={styles.btnCancelar}
-              onPress={ ()=> navigation.navigate('Cadastro')}
+              onPress={ ()=> delet()}
               > 
-              <Text style={styles.textCancelar}>Cancelar / Fechar</Text>
+              <Text style={styles.textCancelar}>Deletar</Text>
             </TouchableOpacity>
 
           </View>

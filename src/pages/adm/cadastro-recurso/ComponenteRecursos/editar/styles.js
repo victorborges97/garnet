@@ -81,7 +81,15 @@ const styles = StyleSheet.create({
   /**
    * CSS INPUT GLOBAL PARA TODOS
    */
-
+  inputSelect: {
+    borderColor: '#ABABAB',
+    borderWidth: 0.5,
+    borderRadius: 8,
+    width: '100%',
+    height: 33,
+    fontSize: 13,
+    color:'#525252',
+  },
   input: {
     borderColor: '#ABABAB',
     borderWidth: 0.5,
@@ -103,6 +111,39 @@ const styles = StyleSheet.create({
     color:'#525252',
   },
 
+  /*CSS ABRE CSS DO INPUT STATUS*/
+  ViewTextStts: {
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    width: '100%',
+    flex: 1.1,
+    //backgroundColor: '#a3d5'
+  },
+  Status: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems:'center',
+    padding: 5,
+  },
+  textStts: {
+    fontSize: 14,
+    color:'#525252',
+  },
+  ViewInputStts: {
+    width: '100%',
+    flex: 4,
+  },
+  inputStatus: {
+    borderColor: '#ABABAB',
+    borderWidth: 0.5,
+    borderRadius: 8,
+    width: '100%',
+    fontSize: 13,
+    padding: 3,
+    color:'#525252',
+    height: 33,
+  },
+
   /*CSS ABRE CSS DO INPUT DESCRIÇAO*/
   Descricao: {
     justifyContent: 'space-between',
@@ -122,10 +163,8 @@ const styles = StyleSheet.create({
     color:'#525252',
   },
   inputDescricao: {
-    alignItems: 'flex-end',
     width: '100%',
     flex: 4.0,
-    //backgroundColor:'#a3b2'
   },
   /*CSS FECHA CSS DO INPUT DESCRIÇAO*/
 
@@ -207,7 +246,7 @@ const styles = StyleSheet.create({
     height: 30,
     padding: 10,
     marginLeft: '5%',
-    width: '43%',
+    width: '23%',
     justifyContent: 'center',
   },
   textGravar: {

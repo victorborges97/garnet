@@ -34,19 +34,12 @@ export default function Cadastro({navigation}) {
       setName(JSON.parse(result))
     }
   });
-  
-
-  const Refresh = () => {
-    if(inReload){
-      inLoggin()
-    }
-  }
 
   useEffect(() => {
-    Refresh()
+    BuscarRecursos()
   });
 
-  function inLoggin() {
+  function BuscarRecursos() {
     //o ip vai mudar dependendo do ip da maquina que for roda o server
     fetch(base_URL_DELETE_PUT_GET_POST_Recursos, {
       method:"GET",
@@ -58,15 +51,15 @@ export default function Cadastro({navigation}) {
     //recebo a resposta do server
     .then(res=>res.json())
     .then ((res) => {
-      setData(res)
+      setData(res.data)
       setInReload(false)
     })
   }
   function onRefresh() {
-    //Clear old data of the list
+    //Vai limpar o useState data que está armazenado os Dados da API
     setData([]);
-    //Call the Service to get the latest data
-    inLoggin();
+    //Vai obter os dados mais recentes, da API
+    BuscarRecursos();
   }
 
   return (
@@ -130,7 +123,7 @@ export default function Cadastro({navigation}) {
             </TouchableOpacity>
             <TouchableOpacity 
               style={styles.btnbarranovo}
-              onPress={ ()=> navigation.navigate('CadastrarRecurso') }
+              onPress={ ()=> {navigation.navigate('CadastrarRecurso'), setInReload(true) }}
               ><Text style={styles.textBtnNovo}>Novo recurso</Text>
             </TouchableOpacity>
           </View>
@@ -163,10 +156,10 @@ export default function Cadastro({navigation}) {
                 <FlatList 
                   data={data}
                   renderItem={( {item} ) => 
-                      <TouchableOpacity onPress={ ()=> navigation.navigate('EditarRecurso') } style={styles.flatList}>
-                      <Text style={styles.test1} numberOfLines={1}>{item.descricao}</Text>
-                      <Text style={styles.test2}>{item.qtde}</Text>
-                      <Text style={styles.test3}>{item.status}</Text>
+                      <TouchableOpacity onPress={ () => {navigation.navigate('EditarRecurso', {itemId: item})} } style={styles.flatList}>
+                        <Text style={styles.test1} numberOfLines={1}>{item.descricao}</Text>
+                        <Text style={styles.test2}>{item.qtde}</Text>
+                        <Text style={styles.test3}>{item.status}</Text>
                       </TouchableOpacity>
                   }
                   keyExtractor={item => item._id}

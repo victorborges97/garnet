@@ -80,6 +80,8 @@ export default function Login({navigation}) {
         AsyncStorage.setItem('token', res.token);
 
         navigation.navigate('Dashboard')
+        setUsuario('')
+        setPassword('')
       } else{
         //Mensagem dos erros de senha, usuario e etc.
         Alert.alert(
@@ -100,6 +102,8 @@ export default function Login({navigation}) {
     .done();//Não sei pra que.
 
   }
+
+  
   return (
 
     <KeyboardAvoidingView style={styles.container}>
