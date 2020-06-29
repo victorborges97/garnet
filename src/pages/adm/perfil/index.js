@@ -9,6 +9,7 @@ import {
   TextInput,
   SafeAreaView,
   AsyncStorage,
+  RefreshControl
 } from 'react-native';
 
 import styles from './styles';
@@ -20,67 +21,54 @@ export default function Perfil({navigation}) {
   const [Name,setName] = useState('');
   const [logo] = useState(new Animated.ValueXY({x: 244, y: 53}));
 
-  const [data,setData] = useState('');
+  const [data,setData] = useState();
+  const [referenc,setReferenc] = useState(true)
   //state de dados do usuario
-  const [usuario,setUsuario] = useState('');
-  const [nome,setNome] = useState('');
-  const [address,setAddress] = useState([]);
-  const [rua,setRua] = useState('');
-  const [bairro,setBairro] = useState('');
-  const [estado,setEstado] = useState('');
-  const [municipio,setMunicipio] = useState('');
-  const [ref,setRef] = useState('');
-  const [number,setNumber] = useState('');
-  const [cep,setCep] = useState('');
-  const [tel,setTel] = useState('');
-  const [email,setEmail] = useState('');
-
-  const [inReload,setInReload] = useState(true);
-  const Refresh = () => {
-    if(inReload){
-      BuscaDados()
-    }
-  }
+  const [nome,setNome] = useState('')
+  const [usuario,setUsuario] = useState('')
+  const [password,setPassword] = useState('')
+  const [rua,setRua] = useState('')
+  const [number,setNumber] = useState('')
+  const [bairro,setBairro] = useState('')
+  const [estado,setEstado] = useState('')
+  const [municipio,setMunicipio] = useState('')
+  const [ref,setRef] = useState('')
+  const [cep,setCep] = useState('')
+  const [tel,setTel] = useState('')
+  const [email,setEmail] = useState('')
 
   useEffect(() => {
-    Refresh()
-    setUsuario(data.usuario)
-    setNome(data.name)
-    setAddress(data.address)
-    dados()
-  });
-  function dados() {
-    if(address != null){
-      setRua(address.rua)
-      setBairro(address.bairro)
-      setEstado(address.estado)
-      setMunicipio(address.municipio)
-      setRef(address.ref)
-      setNumber(address.number)
-      setCep(address.cep)
-      setTel(address.tel)
-      setEmail(address.email)
-      
-    }
-  }
+    _retrieveData()
+    setReferenc(false)
+  },[referenc])
 
-  function BuscaDados() {
-    AsyncStorage.getItem('name', (err, result)=> {
-      if(result != null){
-        setName(JSON.parse(result))
+  async function _retrieveData() {
+    try {
+      const value = JSON.parse(await AsyncStorage.getItem('user'));
+      if (value !== null) {
+        // Endereço
+        setBairro(value["address"]["bairro"]);
+        setBairro(value["address"][cep]);
+        setBairro(value["address"]["email"]);
+        setBairro(value["address"]["estado"]);
+        setBairro(value["address"]["municipio"]);
+        setBairro(value["address"][number]);
+        setBairro(value["address"]["ref"]);
+        setBairro(value["address"]["rua"]);
+        setBairro(value["address"][tel]);
+
+        setBairro(value["name"]);
+        setBairro(value["usuario"]);
       }
-    });
-    AsyncStorage.getItem('user', (err, result)=> {
-      if(result != null){
-      setData(JSON.parse(result))
-      }
-    });
-    setInReload(false)
-  }
-  
-  
+    } catch (error) {
+      // Error retrieving data
+    }
+  };
+
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView 
+    style={styles.container}
+    >
       
       <SafeAreaView>
         <KeyboardAvoidingView style={styles.container2}>
@@ -116,7 +104,7 @@ export default function Perfil({navigation}) {
                   style={styles.input} 
                   value={usuario}
                   autoCorrect={false} 
-                  onChangeText={(text) => {setUsuario(text)}}
+                  onChangeText={(itemValue, itemIndex) => setUsuario(itemValue)}
                 />
               </View>
             </View>
@@ -129,7 +117,7 @@ export default function Perfil({navigation}) {
                   style={styles.input} 
                   value={nome}
                   autoCorrect={false} 
-                  onChangeText={()=> {}}
+                  onChangeText={(itemValue, itemIndex) => setNome(itemValue)}
                 />
               </View>
             </View>
@@ -153,9 +141,9 @@ export default function Perfil({navigation}) {
               <View style={styles.ViewInput}>
                 <TextInput 
                   style={styles.input} 
-                  value=""
+                  value={password}
                   autoCorrect={false} 
-                  onChangeText={()=> {}}
+                  onChangeText={(itemValue, itemIndex) => setPassword(itemValue)}
                 />
               </View>
             </View>
@@ -194,7 +182,7 @@ export default function Perfil({navigation}) {
                   style={styles.input} 
                   value={rua}
                   autoCorrect={false} 
-                  onChangeText={()=> {}}
+                  onChangeText={(itemValue, itemIndex) => setRua(itemValue)}
                 />
               </View>
             </View>
@@ -207,7 +195,7 @@ export default function Perfil({navigation}) {
                   style={styles.input} 
                   value={bairro}
                   autoCorrect={false} 
-                  onChangeText={()=> {}}
+                  onChangeText={(itemValue, itemIndex) => setBairro(itemValue)}
                 />
               </View>
             </View>
@@ -220,7 +208,7 @@ export default function Perfil({navigation}) {
                   style={styles.input} 
                   value={estado}
                   autoCorrect={false} 
-                  onChangeText={()=> {}}
+                  onChangeText={(itemValue, itemIndex) => setEstado(itemValue)}
                 />
               </View>
             </View>
@@ -233,7 +221,7 @@ export default function Perfil({navigation}) {
                   style={styles.input} 
                   value={municipio}
                   autoCorrect={false} 
-                  onChangeText={()=> {}}
+                  onChangeText={(itemValue, itemIndex) => setMunicipio(itemValue)}
                 />
               </View>
             </View>
@@ -246,7 +234,7 @@ export default function Perfil({navigation}) {
                   style={styles.input} 
                   value={ref}
                   autoCorrect={false} 
-                  onChangeText={()=> {}}
+                  onChangeText={(itemValue, itemIndex) => setRef(itemValue)}
                 />
               </View>
             </View>
@@ -257,9 +245,10 @@ export default function Perfil({navigation}) {
               <View style={styles.ViewInput}>
                 <TextInput 
                   style={styles.input} 
-                  value={number}
+                  textContentType={"none"}
+                  value={String(number)}
                   autoCorrect={false} 
-                  onChangeText={()=> {}}
+                  onChangeText={(itemValue, itemIndex) => setNumber(itemValue)}
                 />
               </View>
             </View>
@@ -270,9 +259,10 @@ export default function Perfil({navigation}) {
               <View style={styles.ViewInput}>
                 <TextInput 
                   style={styles.input} 
-                  value={cep}
+                  textContentType={"postalCode"}
+                  value={String(cep)}
                   autoCorrect={false} 
-                  onChangeText={()=> {}}
+                  onChangeText={(itemValue, itemIndex) => setCep(itemValue)}
                 />
               </View>
             </View>
@@ -283,9 +273,10 @@ export default function Perfil({navigation}) {
               <View style={styles.ViewInput}>
                 <TextInput 
                   style={styles.input} 
-                  value={tel}
+                  textContentType={"telephoneNumber"}
+                  value={String(tel)}
                   autoCorrect={false} 
-                  onChangeText={()=> {}}
+                  onChangeText={(itemValue, itemIndex) => setTel(itemValue)}
                 />
               </View>
             </View>
@@ -298,7 +289,7 @@ export default function Perfil({navigation}) {
                   style={styles.input} 
                   value={email}
                   autoCorrect={false} 
-                  onChangeText={setEmail}
+                  onChangeText={(itemValue, itemIndex) => setEmail(itemValue)}
                 />
               </View>
             </View>

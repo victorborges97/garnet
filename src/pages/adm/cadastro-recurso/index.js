@@ -19,7 +19,7 @@ import {
 import styles from './styles';
 import { base_URL_DELETE_PUT_GET_POST_Recursos } from '../../../services/api'
 
-export default function Cadastro({navigation}) {
+export default function Cadastro({ navigation: { goBack, navigate } }) {
   YellowBox.ignoreWarnings([
     'VirtualizedLists should never be nested', // TODO: Remove when fixed
   ])
@@ -36,8 +36,14 @@ export default function Cadastro({navigation}) {
   });
 
   useEffect(() => {
-    BuscarRecursos()
-  });
+    refresh()
+  },[refresh]);
+
+  function refresh() {
+    if(inReload) {
+      BuscarRecursos()
+    }
+  }
 
   function BuscarRecursos() {
     //o ip vai mudar dependendo do ip da maquina que for roda o server
@@ -52,9 +58,11 @@ export default function Cadastro({navigation}) {
     .then(res=>res.json())
     .then ((res) => {
       setData(res.data)
+      console.log(data)
       setInReload(false)
     })
   }
+  
   function onRefresh() {
     //Vai limpar o useState data que está armazenado os Dados da API
     setData([]);
@@ -123,7 +131,7 @@ export default function Cadastro({navigation}) {
             </TouchableOpacity>
             <TouchableOpacity 
               style={styles.btnbarranovo}
-              onPress={ ()=> {navigation.navigate('CadastrarRecurso'), setInReload(true) }}
+              onPress={ ()=> {navigate('CadastrarRecurso'), setInReload(true) }}
               ><Text style={styles.textBtnNovo}>Novo recurso</Text>
             </TouchableOpacity>
           </View>
@@ -156,7 +164,7 @@ export default function Cadastro({navigation}) {
                 <FlatList 
                   data={data}
                   renderItem={( {item} ) => 
-                      <TouchableOpacity onPress={ () => {navigation.navigate('EditarRecurso', {itemId: item})} } style={styles.flatList}>
+                      <TouchableOpacity onPress={ () => {navigate('EditarRecurso', {itemId: item})} } style={styles.flatList}>
                         <Text style={styles.test1} numberOfLines={1}>{item.descricao}</Text>
                         <Text style={styles.test2}>{item.qtde}</Text>
                         <Text style={styles.test3}>{item.status}</Text>
@@ -175,7 +183,7 @@ export default function Cadastro({navigation}) {
 
           <TouchableOpacity 
             style={styles.btnVoltar}
-            onPress={ ()=> navigation.navigate('Dashboard')}
+            onPress={ ()=> goBack()}
             > 
             <Text style={styles.textVoltar}>Voltar</Text>
           </TouchableOpacity>

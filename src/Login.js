@@ -78,7 +78,7 @@ export default function Login({navigation}) {
         AsyncStorage.setItem('user', JSON.stringify(res.user));
         AsyncStorage.setItem('name', JSON.stringify(res.user.name));
         AsyncStorage.setItem('token', res.token);
-
+        
         navigation.navigate('Dashboard')
         setUsuario('')
         setPassword('')

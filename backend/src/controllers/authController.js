@@ -61,6 +61,9 @@ router.post('/authenticate', async (req, res) => {
 
     const user = await User.findOne({ usuario }).select('+password'); //buscar usuario no db
 
+    if(usuario == '' && password =='')
+        return res.status(400).send({ message: 'Campo de Usuario não preenchido', 'success': false });
+
     if (!usuario)
         return res.status(400).send({ message: 'Usuario não existe', 'success': false });
     
