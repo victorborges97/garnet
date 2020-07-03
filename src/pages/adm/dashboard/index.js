@@ -48,7 +48,7 @@ export default function Dashboard({navigation}) {
     else
     if(hour < 12)
     {
-      setHorario("Bom Dia!");
+      setHorario("Bom Dia");
     }
     else
     if(hour < 18)

@@ -88,7 +88,7 @@ export default function Perfil({navigation}) {
     else
     if(hour < 12)
     {
-      setHorario("Bom Dia!");
+      setHorario("Bom Dia");
     }
     else
     if(hour < 18)
@@ -284,7 +284,7 @@ export default function Perfil({navigation}) {
               <View style={styles.ViewInput}>
                 <TextInput 
                   style={styles.input} 
-                  textContentType={"none"}
+                  keyboardType='numeric'
                   value={String(number)}
                   autoCorrect={false} 
                   onChangeText={(itemValue, itemIndex) => setNumber(itemValue)}
@@ -299,6 +299,8 @@ export default function Perfil({navigation}) {
                 <TextInput 
                   style={styles.input} 
                   textContentType={"postalCode"}
+                  keyboardType='numeric'
+                  maxLength={8}
                   value={String(cep)}
                   autoCorrect={false} 
                   onChangeText={(itemValue, itemIndex) => setCep(itemValue)}
@@ -313,6 +315,8 @@ export default function Perfil({navigation}) {
                 <TextInput 
                   style={styles.input} 
                   textContentType={"telephoneNumber"}
+                  keyboardType='numeric'
+                  maxLength={11}
                   value={String(tel)}
                   autoCorrect={false} 
                   onChangeText={(itemValue, itemIndex) => setTel(itemValue)}

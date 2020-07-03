@@ -21,7 +21,7 @@ export default function App() {
   return(
     <SafeAreaProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={Login}>
+        <Stack.Navigator initialRouteName={Login} headerMode={"none"} >
           <Stack.Screen name="Login" component={Login} 
             options={{
               headerTransparent: true,

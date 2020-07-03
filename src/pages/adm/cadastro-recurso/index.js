@@ -28,6 +28,7 @@ export default function Cadastro({ navigation: { goBack, navigate } }) {
   const [data,setData] = useState( );
   const [Name,setName] = useState('');
   const [inReload,setInReload] = useState(true);
+  const [horario,setHorario] = useState('');
 
   AsyncStorage.getItem('name', (err, result)=> {
     if(result != null){
@@ -36,6 +37,7 @@ export default function Cadastro({ navigation: { goBack, navigate } }) {
   });
 
   useEffect(() => {
+    Horario()
     refresh()
   },[refresh]);
 
@@ -63,6 +65,34 @@ export default function Cadastro({ navigation: { goBack, navigate } }) {
     })
   }
   
+  function Horario() {
+    let d = new Date();
+    let hour = d.getHours();
+    if(hour < 5)
+    {
+      setHorario("Boa Noite");
+    }
+    else
+    if(hour < 8)
+    {
+      setHorario("Bom Dia");
+    }
+    else
+    if(hour < 12)
+    {
+      setHorario("Bom Dia");
+    }
+    else
+    if(hour < 18)
+    {
+      setHorario("Boa tarde");
+    }
+    else
+    {
+      setHorario("Boa noite");
+    }
+  }
+
   function onRefresh() {
     //Vai limpar o useState data que está armazenado os Dados da API
     setData([]);
@@ -94,7 +124,7 @@ export default function Cadastro({ navigation: { goBack, navigate } }) {
             Gestor Acadêmico Redentor - Itaperuna
           </Text>
           <Text style={styles.textHeader2}>
-            Boa Noite, {Name}
+            {horario}, {Name}
           </Text>
         </View>
 
