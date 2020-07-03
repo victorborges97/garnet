@@ -21,46 +21,46 @@ export default function App() {
   return(
     <SafeAreaProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={Login} headerMode="none">
+        <Stack.Navigator initialRouteName={Login}>
           <Stack.Screen name="Login" component={Login} 
             options={{
-              //headerTransparent: true,
+              headerTransparent: true,
               headerTitle: null,
             }} 
           />
           <Stack.Screen name="Dashboard" component={Dashboard} 
             options={{
-              //headerTransparent: true,
+              headerTransparent: true,
               headerTitle: null,
             }}
           />
           <Stack.Screen name="Perfil" component={Perfil} 
             options={{
-              //headerTransparent: true,
+              headerTransparent: true,
               headerTitle: null,
             }}
           />
           <Stack.Screen name="Cadastro" component={Cadastro} 
             options={{
-              //headerTransparent: true,
+              headerTransparent: true,
               headerTitle: null,
             }}
           />
           <Stack.Screen name="Solicitacao" component={Solicitacao} 
             options={{
-              //headerTransparent: true,
+              headerTransparent: true,
               headerTitle: null,
             }}
           />
           <Stack.Screen name="EditarRecurso" component={EditarRecurso} 
             options={{
-              //headerTransparent: true,
+              headerTransparent: true,
               headerTitle: null,
             }}
           />
           <Stack.Screen name="CadastrarRecurso" component={CadastrarRecurso} 
             options={{
-              //headerTransparent: true,
+              headerTransparent: true,
               headerTitle: null,
             }}
           />

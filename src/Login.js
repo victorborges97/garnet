@@ -108,7 +108,7 @@ export default function Login({navigation}) {
 
     <KeyboardAvoidingView style={styles.container}>
       
-        <StatusBar hidden={true} />
+      <StatusBar translucent backgroundColor={'#FFF'} barStyle='dark-content' />
         <View style={styles.header}>
         
           <Animated.Image 

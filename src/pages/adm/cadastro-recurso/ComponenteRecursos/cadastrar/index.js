@@ -84,7 +84,7 @@ export default function CadastrarRecurso({navigation}) {
   return (
     <ScrollView style={styles.container}>
       
-      <StatusBar hidden={true} />
+      <StatusBar translucent backgroundColor={'#FFF'} barStyle='dark-content' />
       <KeyboardAvoidingView style={styles.container2}>
         <View style={styles.header}>
 

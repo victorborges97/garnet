@@ -5,3 +5,6 @@ export const base_URL_register = 'https://api-garnet.herokuapp.com/auth/register
 
 //recursos
 export const base_URL_DELETE_PUT_GET_POST_Recursos = 'https://api-garnet.herokuapp.com/recursos/'
+
+//solicitaçoes
+export const base_URL_DELETE_PUT_GET_POST_Solicitacao = 'https://api-garnet.herokuapp.com/solicitacao/'

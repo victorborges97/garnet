@@ -16,6 +16,7 @@ export default function Dashboard({navigation}) {
 
   const [Name,setName] = useState('');
   const [logo] = useState(new Animated.ValueXY({x: 244, y: 53}));
+  const [horario,setHorario] = useState('')
 
   AsyncStorage.getItem('name', (err, result)=> {
     if(result != null){
@@ -23,13 +24,46 @@ export default function Dashboard({navigation}) {
     }
   });
 
+  useEffect(()=>{
+    Horario()
+  })
+
   function Logout() {
     AsyncStorage.clear()
     navigation.navigate('Login')
   }
+
+  function Horario() {
+    let d = new Date();
+    let hour = d.getHours();
+    if(hour < 5)
+    {
+      setHorario("Boa Noite");
+    }
+    else
+    if(hour < 8)
+    {
+      setHorario("Bom Dia");
+    }
+    else
+    if(hour < 12)
+    {
+      setHorario("Bom Dia!");
+    }
+    else
+    if(hour < 18)
+    {
+      setHorario("Boa tarde");
+    }
+    else
+    {
+      setHorario("Boa noite");
+    }
+  }
+
   return (
     <ScrollView style={styles.container}>
-      <StatusBar hidden={true} />
+      <StatusBar translucent backgroundColor={'#FFF'} barStyle='dark-content' />
       <KeyboardAvoidingView style={styles.container2}>
         <View style={styles.header}>
 
@@ -45,7 +79,7 @@ export default function Dashboard({navigation}) {
             Gestor Acadêmico Redentor - Itaperuna
           </Text>
           <Text style={styles.textHeader2}>
-            Boa Noite, {Name}
+            {horario}, {Name}
           </Text>
         </View>
 

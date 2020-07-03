@@ -79,7 +79,7 @@ export default function Cadastro({ navigation: { goBack, navigate } }) {
         onRefresh={onRefresh}
       />}
     >
-      <StatusBar hidden={true} />
+      <StatusBar translucent backgroundColor={'#FFF'} barStyle='dark-content' />
       <KeyboardAvoidingView style={styles.container2}>
         <View style={styles.header}>
           <Animated.Image 

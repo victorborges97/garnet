@@ -9,7 +9,8 @@ import {
   TextInput,
   SafeAreaView,
   AsyncStorage,
-  RefreshControl
+  RefreshControl,
+  StatusBar
 } from 'react-native';
 
 import styles from './styles';
@@ -18,15 +19,15 @@ import styles from './styles';
 
 export default function Perfil({navigation}) {
 
-  const [Name,setName] = useState('');
   const [logo] = useState(new Animated.ValueXY({x: 244, y: 53}));
-
-  const [data,setData] = useState();
   const [referenc,setReferenc] = useState(true)
   //state de dados do usuario
   const [nome,setNome] = useState('')
   const [usuario,setUsuario] = useState('')
   const [password,setPassword] = useState('')
+  const [passwordNova,setPasswordNova] = useState('')
+  const [passConfirma, setPassConfirma] = useState('')
+
   const [rua,setRua] = useState('')
   const [number,setNumber] = useState('')
   const [bairro,setBairro] = useState('')
@@ -37,7 +38,10 @@ export default function Perfil({navigation}) {
   const [tel,setTel] = useState('')
   const [email,setEmail] = useState('')
 
+  const [horario,setHorario] = useState('')
+
   useEffect(() => {
+    Horario()
     _retrieveData()
     setReferenc(false)
   },[referenc])
@@ -48,28 +52,60 @@ export default function Perfil({navigation}) {
       if (value !== null) {
         // Endereço
         setBairro(value["address"]["bairro"]);
-        setBairro(value["address"][cep]);
-        setBairro(value["address"]["email"]);
-        setBairro(value["address"]["estado"]);
-        setBairro(value["address"]["municipio"]);
-        setBairro(value["address"][number]);
-        setBairro(value["address"]["ref"]);
-        setBairro(value["address"]["rua"]);
-        setBairro(value["address"][tel]);
+        setCep(value["address"]["cep"]);
+        setEmail(value["address"]["email"]);
+        setEstado(value["address"]["estado"]);
+        setMunicipio(value["address"]["municipio"]);
+        setNumber(value["address"]["number"]);
+        setRef(value["address"]["ref"]);
+        setRua(value["address"]["rua"]);
+        setTel(value["address"]["tel"]);
 
-        setBairro(value["name"]);
-        setBairro(value["usuario"]);
+        setNome(value["name"]);
+        setUsuario(value["usuario"]);
       }
     } catch (error) {
       // Error retrieving data
     }
   };
 
+  function CompararSenha() {
+
+  };
+
+  function Horario() {
+    let d = new Date();
+    let hour = d.getHours();
+    if(hour < 5)
+    {
+      setHorario("Boa Noite");
+    }
+    else
+    if(hour < 8)
+    {
+      setHorario("Bom Dia");
+    }
+    else
+    if(hour < 12)
+    {
+      setHorario("Bom Dia!");
+    }
+    else
+    if(hour < 18)
+    {
+      setHorario("Boa tarde");
+    }
+    else
+    {
+      setHorario("Boa noite");
+    }
+  }
+
   return (
     <ScrollView 
     style={styles.container}
     >
-      
+      <StatusBar translucent backgroundColor={'#FFF'} barStyle='dark-content' />
       <SafeAreaView>
         <KeyboardAvoidingView style={styles.container2}>
           <View style={styles.header}>
@@ -86,7 +122,7 @@ export default function Perfil({navigation}) {
               Gestor Acadêmico Redentor - Itaperuna
             </Text>
             <Text style={styles.textHeader2}>
-              Boa Noite, {Name}
+              {horario}, {nome}
             </Text>
           </View>
 
@@ -128,9 +164,10 @@ export default function Perfil({navigation}) {
               <View style={styles.ViewInput}>
                 <TextInput 
                   style={styles.input} 
-                  value=""
+                  value={password}
                   autoCorrect={false} 
-                  onChangeText={()=> {}}
+                  secureTextEntry={true}
+                  onChangeText={(itemValue, itemIndex) => setPassword(itemValue)}
                 />
               </View>
             </View>
@@ -141,9 +178,10 @@ export default function Perfil({navigation}) {
               <View style={styles.ViewInput}>
                 <TextInput 
                   style={styles.input} 
-                  value={password}
+                  value={passwordNova}
                   autoCorrect={false} 
-                  onChangeText={(itemValue, itemIndex) => setPassword(itemValue)}
+                  secureTextEntry={true}
+                  onChangeText={(itemValue, itemIndex) => setPasswordNova(itemValue)}
                 />
               </View>
             </View>
@@ -154,9 +192,10 @@ export default function Perfil({navigation}) {
               <View style={styles.ViewInput}>
                 <TextInput 
                   style={styles.input} 
-                  value=""
+                  value={passConfirma}
                   autoCorrect={false} 
-                  onChangeText={()=> {}}
+                  secureTextEntry={true}
+                  onChangeText={(itemValue, itemIndex) => setPassConfirma(itemValue)}
                 />
               </View>
             </View>
