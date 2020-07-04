@@ -13,11 +13,12 @@ import {
   FlatList,
   RefreshControl,
   TextInput,
-  Picker
+  Picker,
+  Image
 } from 'react-native';
 
 import styles from './styles';
-
+import api from '../../../services/apiteste'
 
 export default function Solicitacao({navigation}) {
 
@@ -25,7 +26,7 @@ export default function Solicitacao({navigation}) {
   const [horario,setHorario] = useState('')
   const [Name,setName] = useState('');
   const [inReload,setInReload] = useState(true);
-  const [data,setData] = useState([])
+  //const [data,setData] = useState([])
   const [selectedValue,setSelectedValue] = useState("TODOS")
   /*YellowBox.ignoreWarnings([
     'VirtualizedLists should never be nested', // TODO: Remove when fixed
@@ -82,6 +83,16 @@ export default function Solicitacao({navigation}) {
     //Vai obter os dados mais recentes, da API
     //BuscarRecursos();
   }
+  function color(item) {
+    if(item=='ATIVO'){
+      return <Animated.Image style={{width:16,height:16}} source={require('../../../assets/ativo.png')} />
+    }
+    if(item=='ANDAMENTO'){
+      return <Animated.Image style={{width:16,height:16}} source={require('../../../assets/andamento.png')} />
+    } else {
+      return <Animated.Image style={{width:16,height:16}} source={require('../../../assets/pendente.png')} />
+    }
+  }
 
   return (
     <ScrollView 
@@ -119,7 +130,7 @@ export default function Solicitacao({navigation}) {
           </View>
 
           <View > 
-            <View style={styles.ViewText}>
+            <View style={styles.ViewFiltro1}>
               <Text style={styles.textDescricao}>Status: </Text>
               <View style={styles.ViewinputStatus}>
                 <Picker 
@@ -132,17 +143,13 @@ export default function Solicitacao({navigation}) {
                   <Picker.Item label="Administrativo" value="adm"></Picker.Item>
                 </Picker>
               </View>
-              <Text style={styles.textDescricao}>Disciplina: </Text>
+              <Text style={styles.textDisciplina}>Disciplina: </Text>
               <View style={styles.ViewinputStatus}>
-                <Picker 
-                  style={styles.input}
-                  selectedValue={selectedValue}
-                  onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                >
-                  <Picker.Item label="TODOS" value="TODOS"></Picker.Item>
-                  <Picker.Item label="Audiovisual" value="Audiovisual"></Picker.Item>
-                  <Picker.Item label="Administrativo" value="adm"></Picker.Item>
-                </Picker>
+                <TextInput 
+                  value={""}
+                  autoCorrect={false} 
+                  onChangeText={() => {}}
+                />
               </View>
               <TouchableOpacity 
                 style={styles.btnbarrapesquisa}
@@ -150,30 +157,23 @@ export default function Solicitacao({navigation}) {
               ><Text style={styles.textBtn}>Consultar</Text>
               </TouchableOpacity>
             </View>
-            <View style={styles.ViewText}>
+
+            <View style={styles.ViewFiltro2}>
               <Text style={styles.textDescricao}>Data: </Text>
               <View style={styles.ViewinputStatus}>
-                <Picker 
-                  style={styles.input}
-                  selectedValue={selectedValue}
-                  onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                >
-                  <Picker.Item label="TODOS" value="TODOS"></Picker.Item>
-                  <Picker.Item label="Audiovisual" value="Audiovisual"></Picker.Item>
-                  <Picker.Item label="Administrativo" value="adm"></Picker.Item>
-                </Picker>
+                <TextInput 
+                  value={""}
+                  autoCorrect={false} 
+                  onChangeText={() => {}}
+                />
               </View>
-              <Text style={styles.textDescricao}>Docente: </Text>
-              <View style={styles.ViewinputStatus}>
-                <Picker 
-                  style={styles.input}
-                  selectedValue={selectedValue}
-                  onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                >
-                  <Picker.Item label="TODOS" value="TODOS"></Picker.Item>
-                  <Picker.Item label="Audiovisual" value="Audiovisual"></Picker.Item>
-                  <Picker.Item label="Administrativo" value="adm"></Picker.Item>
-                </Picker>
+              <Text style={styles.textDocente}>Docente: </Text>
+              <View style={styles.ViewinputDocente}>
+                <TextInput 
+                  value={""}
+                  autoCorrect={false} 
+                  onChangeText={() => {}}
+                />
               </View>
               <TouchableOpacity 
                 style={styles.btnbarrapesquisa}
@@ -204,18 +204,78 @@ export default function Solicitacao({navigation}) {
                   </View>
                   :
                   <SafeAreaView style={styles.viewFlatList}>
-                    <View style={styles.barraDescricao}>
-                      <Text style={styles.textDesc}>Descrição</Text>
-                      <Text style={styles.textBarraDescricao}>QT/dia</Text>
-                      <Text style={styles.textDesc}>Status</Text>
-                    </View>
                     <FlatList 
-                      data={data}
+                      data={[
+                        {
+                          "_id":"1",
+                          "professor":"Raphael Ramos Ferreira",
+                          "data":"26-09-2020",
+                          "created":"20-07-2020 12:00",
+                          "horario":[
+                            "MANHÃ - 10:55 - 12:20",
+                            "MANHÃ - 09:25 - 10:55",
+                            "MANHÃ - 07:25 - 09:15"],
+                          "sala":"5002",
+                          "stts":"ATIVO"
+                        },
+                        {
+                          "_id":"2",
+                          "professor":"Jamil Bussade",
+                          "data":"26-09-2020",
+                          "created":"20-07-2020 12:00",
+                          "horario":[
+                            "MANHÃ - 10:55 - 12:20",
+                            "MANHÃ - 09:25 - 10:55",
+                            "MANHÃ - 07:25 - 09:15"],
+                          "sala":"3008",
+                          "stts":"ANDAMENTO"
+                        },
+                        {
+                          "_id":"2",
+                          "professor":"Flavio Arruda",
+                          "data":"26-09-2020",
+                          "created":"20-07-2020 12:00",
+                          "horario":[
+                            "MANHÃ - 10:55 - 12:20",
+                            "MANHÃ - 09:25 - 10:55",
+                            "MANHÃ - 07:25 - 09:15"],
+                          "sala":"311",
+                          "stts":"PENDENTE"
+                        },
+                      ]}
                       renderItem={( {item} ) => 
-                          <TouchableOpacity onPress={ () => {navigate('EditarRecurso', {itemId: item})} } style={styles.flatList}>
-                            <Text style={styles.test1} numberOfLines={1}>{item.descricao}</Text>
-                            <Text style={styles.test2}>{item.qtde}</Text>
-                            <Text style={styles.test3}>{item.status}</Text>
+                          <TouchableOpacity 
+                            onPress={ () => {/*navigate('EditarRecurso', {itemId: item})*/} } 
+                            style={styles.flatList}
+                          >
+                            <View style={styles.ViewProfessor}>
+                              <Text style={styles.textProfessor}>Docente:</Text>
+                              <Text style={styles.textNomeProfessor}>{item.professor}</Text>
+                            </View>
+                            <View style={styles.ViewDate}>
+                              <View>
+                                <Text style={styles.textDate}>Data:</Text>
+                                <Text style={styles.textNDate}>{item.data}</Text>
+                              </View>
+                              <View>
+                                <Text style={styles.textDate}>Solicitado em:</Text>
+                                <Text style={styles.textNDate}>{item.created}</Text>
+                              </View>
+                            </View>
+                            <View style={styles.ViewHorario}>
+                              <Text style={styles.textHorario}>Horário:</Text>
+                              <Text style={styles.textNomeHorario}>{item.horario[0]}</Text>
+                            </View>
+                            <View style={styles.ViewSala}>
+                              <Text style={styles.textSala}>Sala:</Text>
+                              <Text style={styles.textNomeSala}>{item.sala}</Text>
+                            </View>
+                            <View style={styles.ViewStts}>
+                              <Text style={styles.textStts}>Status:</Text>
+                              <View style={styles.ViewNomeStts}> 
+                                <Text style={styles.textNomeStts}>{color(item.stts)}</Text>
+                              </View>
+                            </View>
                           </TouchableOpacity>
                       }
                       keyExtractor={item => item._id}

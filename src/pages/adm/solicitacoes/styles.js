@@ -81,10 +81,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 7,
   },
-  ViewText: {
+  ViewFiltro1: {
     flexDirection: 'row',
     justifyContent:'center',
-    width: 70
+    alignItems: 'center',
+    width: 70,
+    marginBottom: 5,
+  },
+  ViewFiltro2: {
+    flexDirection: 'row',
+    justifyContent:'center',
+    alignItems: 'center',
+    width: 70,
+    marginBottom: 5,
   },
   input: {
     borderColor: '#ABABAB',
@@ -94,7 +103,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     padding: 3,
     color:'#525252',
-    height: 20,
+    height: 27,
   },
   ViewinputStatus: {
     borderColor: '#ABABAB',
@@ -105,9 +114,27 @@ const styles = StyleSheet.create({
     width: 70,
 
   },
+  ViewinputDocente: {
+    borderColor: '#ABABAB',
+    borderWidth: 0.5,
+    borderRadius: 8,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    width: 88,
+  },
   textDescricao: {
     fontSize: 14,
     color: '#525252'
+  },
+  textDocente: {
+    fontSize: 14,
+    color: '#525252',
+    marginLeft: 2,
+  },
+  textDisciplina: {
+    fontSize: 14,
+    color: '#525252',
+    marginLeft: 2,
   },
   ViewInputStatus: {
     alignItems: 'flex-start',
@@ -126,7 +153,7 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     width: 102,
     height: 27,
-    margin: 2,
+    marginLeft: 2,
   },
   textBtn: {
     fontSize: 15,
@@ -174,7 +201,7 @@ const styles = StyleSheet.create({
     flex: 1,
     //borderColor: '#ABABAB',
     //borderWidth: 0.5,
-    width:'97%',
+    width:'99%',
     //borderRadius: 5,
     
     padding:5,
@@ -185,45 +212,113 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     
   },
-  textDesc: {
-    fontWeight: 'bold',
-    color: '#525252'
-  },
-  textBarraDescricao: {
-    marginLeft:'50%',
-    fontWeight: 'bold',
-    color: '#525252'
-  },
-  textDesc: {
-    fontWeight: 'bold',
-    color: '#525252'
-  },
+  /*Styles Flatlist*/
   flatList: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    height: 26,
+    // justifyContent: 'space-between',
+    height: 94,
     borderColor: '#E4E4E4',
-    borderBottomWidth: 1,
+    borderWidth: 1,
+    backgroundColor: '#F5F5F5'
   },
-  test1: {
-    flex: 3,
-    width: '60%',
-    //backgroundColor: '#CD025C',
-    color: '#525252'
+
+  /*Styles Dentro do Flatlist*/
+  ViewProfessor: {
+    flexDirection: "column",
+    //backgroundColor: '#3a3a',
+    padding: 3,
+    width: 65
   },
-  test2: {
-    flex: 0.6,
-    width: 1,
-    //backgroundColor: '#aaf5d8',
-    textAlign: 'center',
+  textProfessor: {
+    fontWeight: 'bold',
     color: '#525252',
+    fontSize: 11,
+    fontFamily: "Roboto",
   },
-  test3: {
-    flex: 0.6,
-    width: '10%',
-    //backgroundColor: '#e03b3b',
-    textAlign: 'center',
+  textNomeProfessor: {
+    fontWeight: 'normal',
     color: '#525252',
+    fontSize: 11,
+    fontFamily: "Roboto",
+  },
+  //-------------------
+  ViewDate: {
+    flexDirection: "column",
+    //backgroundColor: '#3a3b',
+    padding: 3,
+    width: 80,
+    marginLeft: 2
+  },
+  textDate: {
+    fontWeight: 'bold',
+    color: '#525252',
+    fontSize: 11,
+    fontFamily: "Roboto",
+  },
+  textNDate: {
+    fontWeight: 'normal',
+    color: '#525252',
+    fontSize: 11,
+    fontFamily: "Roboto",
+  },
+  //------------------------
+  ViewHorario: {
+    flexDirection: "column",
+    //backgroundColor: '#3a3a',
+    padding: 3,
+    width: 125,
+    marginLeft: 2
+  },
+  textHorario: {
+    fontWeight: 'bold',
+    color: '#525252',
+    fontSize: 11,
+    fontFamily: "Roboto",
+  },
+  textNomeHorario: {
+    fontWeight: 'normal',
+    color: '#525252',
+    fontSize: 11,
+    fontFamily: "Roboto",
+  },
+  //------------------------
+  ViewSala: {
+    flexDirection: "column",
+    //backgroundColor: '#3a3a',
+    padding: 3,
+    width: 40,
+    marginLeft: 2
+  },
+  textSala: {
+    fontWeight: 'bold',
+    color: '#525252',
+    fontSize: 11,
+    fontFamily: "Roboto",
+  },
+  textNomeSala: {
+    fontWeight: 'normal',
+    color: '#525252',
+    fontSize: 11,
+    fontFamily: "Roboto",
+  },
+  //------------------------
+  ViewStts: {
+    flexDirection: "column",
+    //backgroundColor: '#3a3a',
+    padding: 3,
+    marginLeft: 2
+    
+  },
+  ViewNomeStts: {
+    justifyContent: 'center',
+    //backgroundColor: '#3a3a',
+    height: 60
+  },
+  textStts: {
+    fontWeight: 'bold',
+    color: '#525252',
+    fontSize: 11,
+    fontFamily: "Roboto",
   },
 });
 
