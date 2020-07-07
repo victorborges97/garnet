@@ -1,24 +1,40 @@
-const api = {
-  "_id":"5efe25559317da00173c810c",
-  "horarioInicio":[
-      "2020-07-02T18:30:00.000+00:00",
-      "2020-07-02T20:20:00.000+00:00"
-    ],
-  "horarioFinal":[
-      "2020-07-02T20:00:00.000+00:00",
-      "2020-07-02T22:00:00.000+00:00"
-    ],
-  "professor":"Raphael Ramos",
-  "descricao":"Me da uma ajuda na hora de ligar?",
-  "disciplina":"Projeto de Internet",
-  "disciplina2":"",
-  "data":"2020-09-20T00:00:00.000+00:00",
-  "salareal":"4001",
-  "qdteAlunos":10,
-  "observacoes":"",
-  "recsolicitado":["CAIXA DE SOM - GRANDE"],
-  "completed":"PENDENTE",
-  "user":"5ef031925ade95330017616f",
-};
+const api = [
+  {
+    "_id":"1",
+    "professor":"Raphael Ramos Ferreira",
+    "data":"26-09-2020",
+    "created":"20-07-2020 12:00",
+    "horario":[
+      "MANHÃ - 10:55 - 12:20",
+      "MANHÃ - 09:25 - 10:55",
+      "MANHÃ - 07:25 - 09:15"],
+    "sala":"5002",
+    "stts":"ATIVO"
+  },
+  {
+    "_id":"2",
+    "professor":"Jamil Bussade",
+    "data":"26-09-2020",
+    "created":"20-07-2020 12:00",
+    "horario":[
+      "MANHÃ - 10:55 - 12:20",
+      "MANHÃ - 09:25 - 10:55",
+      "MANHÃ - 07:25 - 09:15"],
+    "sala":"3008",
+    "stts":"ANDAMENTO"
+  },
+  {
+    "_id":"3",
+    "professor":"Flavio Arruda",
+    "data":"26-09-2020",
+    "created":"20-07-2020 12:00",
+    "horario":[
+      "MANHÃ - 10:55 - 12:20",
+      "MANHÃ - 09:25 - 10:55",
+      "MANHÃ - 07:25 - 09:15"],
+    "sala":"311",
+    "stts":"PENDENTE"
+  },
+]
 
 export default api;

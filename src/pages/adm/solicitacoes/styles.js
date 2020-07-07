@@ -311,15 +311,24 @@ const styles = StyleSheet.create({
   },
   ViewNomeStts: {
     justifyContent: 'center',
-    //backgroundColor: '#3a3a',
-    height: 60
+    height: "100%",
+    width:"100%",
+    paddingBottom:"30%",
+    borderColor:"#0b0",
+    borderWidth:1
   },
   textStts: {
     fontWeight: 'bold',
     color: '#525252',
     fontSize: 11,
     fontFamily: "Roboto",
+    
   },
+  sttsImage: {
+    width:20,
+    height:20,
+    
+  }
 });
 
 export default styles;

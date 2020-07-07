@@ -85,25 +85,20 @@ export default function Solicitacao({navigation}) {
   }
   function color(item) {
     if(item=='ATIVO'){
-      return <Animated.Image style={{width:16,height:16}} source={require('../../../assets/ativo.png')} />
+      return <Animated.Image style={styles.sttsImage} source={require('../../../assets/ativo.png')} />
     }
     if(item=='ANDAMENTO'){
-      return <Animated.Image style={{width:16,height:16}} source={require('../../../assets/andamento.png')} />
+      return <Animated.Image style={styles.sttsImage} source={require('../../../assets/andamento.png')} />
     } else {
-      return <Animated.Image style={{width:16,height:16}} source={require('../../../assets/pendente.png')} />
+      return <Animated.Image style={styles.sttsImage} source={require('../../../assets/pendente.png')} />
     }
   }
 
   return (
     <ScrollView 
       style={styles.container}
-      refreshControl={
-        <RefreshControl 
-          refreshing={inReload}
-          onRefresh={onRefresh}
-        />}  
+      refreshControl={ <RefreshControl refreshing={inReload} onRefresh={onRefresh} />}  
     >
-      
       <StatusBar translucent backgroundColor={'#FFF'} barStyle='dark-content' />
       <KeyboardAvoidingView style={styles.container2}>
         <View style={styles.header}>
@@ -205,44 +200,9 @@ export default function Solicitacao({navigation}) {
                   :
                   <SafeAreaView style={styles.viewFlatList}>
                     <FlatList 
-                      data={[
-                        {
-                          "_id":"1",
-                          "professor":"Raphael Ramos Ferreira",
-                          "data":"26-09-2020",
-                          "created":"20-07-2020 12:00",
-                          "horario":[
-                            "MANHÃ - 10:55 - 12:20",
-                            "MANHÃ - 09:25 - 10:55",
-                            "MANHÃ - 07:25 - 09:15"],
-                          "sala":"5002",
-                          "stts":"ATIVO"
-                        },
-                        {
-                          "_id":"2",
-                          "professor":"Jamil Bussade",
-                          "data":"26-09-2020",
-                          "created":"20-07-2020 12:00",
-                          "horario":[
-                            "MANHÃ - 10:55 - 12:20",
-                            "MANHÃ - 09:25 - 10:55",
-                            "MANHÃ - 07:25 - 09:15"],
-                          "sala":"3008",
-                          "stts":"ANDAMENTO"
-                        },
-                        {
-                          "_id":"2",
-                          "professor":"Flavio Arruda",
-                          "data":"26-09-2020",
-                          "created":"20-07-2020 12:00",
-                          "horario":[
-                            "MANHÃ - 10:55 - 12:20",
-                            "MANHÃ - 09:25 - 10:55",
-                            "MANHÃ - 07:25 - 09:15"],
-                          "sala":"311",
-                          "stts":"PENDENTE"
-                        },
-                      ]}
+                      data={api}
+                      keyExtractor={item => item._id}
+                      scrollEnabled={false}
                       renderItem={( {item} ) => 
                           <TouchableOpacity 
                             onPress={ () => {/*navigate('EditarRecurso', {itemId: item})*/} } 
@@ -278,7 +238,6 @@ export default function Solicitacao({navigation}) {
                             </View>
                           </TouchableOpacity>
                       }
-                      keyExtractor={item => item._id}
                     />
                   </SafeAreaView>
                 }
