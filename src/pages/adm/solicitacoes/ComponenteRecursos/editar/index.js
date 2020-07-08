@@ -7,49 +7,163 @@ import {
   Animated,
   ScrollView,
   StatusBar,
-  AsyncStorage,
-  SafeAreaView,
-  ActivityIndicator,
-  FlatList,
-  RefreshControl,
   TextInput,
   Picker,
-  Image,
-  YellowBox
+  AsyncStorage,
+  Alert,
+  RefreshControl
 } from 'react-native';
 
 import styles from './styles';
-import api from '../../../services/apiteste'
 
-export default function Solicitacao({ navigation: { goBack, navigate } }) {
+import { base_URL_DELETE_PUT_GET_POST_Recursos } from '../../../../../services/api'
+
+export default function EditarSolicitacao({ route, navigation}) {
 
   const [logo] = useState(new Animated.ValueXY({x: 244, y: 53}));
-  const [horario,setHorario] = useState('')
-  const [Name,setName] = useState('');
-  const [inReload,setInReload] = useState(true);
-  //const [data,setData] = useState([])
-  const [selectedValue,setSelectedValue] = useState("TODOS")
-  YellowBox.ignoreWarnings([
+  /*YellowBox.ignoreWarnings([
     'VirtualizedLists should never be nested', // TODO: Remove when fixed
-  ])
-
+  ])*/
+  const [Name,setName] = useState('');
   AsyncStorage.getItem('name', (err, result)=> {
     if(result != null){
       setName(JSON.parse(result))
     }
   });
 
-  useEffect(()=>{
-    Horario()
-    refresh()
-  })
+  const [selectedValue, setSelectedValue] = useState('');
+  const [inReload,setInReload] = useState(true);
+  const [horario,setHorario] = useState('');
 
-  function refresh() {
-    if(inReload) {
-      setInReload(false)
+  const { itemId } = route.params;
+  
+  const [id, setId] = useState('');
+  const [NameProfessor,setNameProfessor] = useState('');
+  const [dataSolicitada,setDataSolicitada] = useState('');
+  const [dataFezSolicitacao,setDataFezSolicitacao] = useState('');
+  const [horarioSolic,setHorarioSolic] = useState({});
+  const [salaSolic,setSalaSolic] = useState('');
+  const [statusSolic,setStts] = useState('');
+  
+
+  const Refresh = () => {
+    if(inReload){
+      setId(itemId._id)
+      setNameProfessor(itemId.professor)
+      setDataSolicitada(itemId.data)
+      setDataFezSolicitacao(itemId.created)
+      //setHorarioSolic(JSON.parse(itemId.horario))
+      setSalaSolic(itemId.sala)
+      setStts(itemId.stts)
+
     }
+    Horario()
   }
 
+  useEffect(()=> {
+    Refresh()
+    setInReload(false)
+  })
+  
+  function atualizar() {
+    //o ip vai mudar dependendo do ip da maquina que for roda o server
+    fetch(base_URL_DELETE_PUT_GET_POST_Recursos+id, {
+      method:"PUT",
+      //aqui vou poder mandar o token para alguma requisição
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "descricao":postText,
+		    "setor":selectedValue,
+		    "status":status,
+		    "qtde":qtde
+      })
+    })
+    //recebo a resposta do server
+    .then(res=>res.json())
+    .then ((res) => {
+      console.log(res)
+      if (res.error) {
+        Alert.alert(
+          "Mensagem",
+          `${res.error}`,
+          [
+            {
+              text: "Cancel",
+              onPress: () => {},
+              style: "cancel"
+            },
+            { text: "OK", onPress: () => {} }
+          ],
+          { cancelable: false }
+        );
+      } else {
+        Alert.alert(
+          "Mensagem",
+          `Foi Atualizado: "${res.descr.descricao}" com sucesso!`,
+        );
+        setSelectedValue("Selecione")
+        setPostText('')
+        setQtde('')
+        setTimeout(() => (
+          navigation.navigate('Cadastro')
+        ), 1500)
+      }
+    })
+
+  }
+
+  function delet() {
+    Alert.alert(
+      "Alerta",
+      "Tem certeza que deseja apagar esse recurso ?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => {},
+          style: "cancel"
+        },
+        { text: "Sim", onPress: () => deletar() }
+      ],
+      { cancelable: false }
+    );
+  }
+
+  function deletar() {
+    //o ip vai mudar dependendo do ip da maquina que for roda o server
+    fetch(base_URL_DELETE_PUT_GET_POST_Recursos+id, {
+      method:"DELETE",
+      //aqui vou poder mandar o token para alguma requisição
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    //recebo a resposta do server
+    .then(res=>res.json())
+    .then ((res) => {
+      if(res) {
+        Alert.alert(
+          "Mensagem",
+          `${res.message}`,
+          [
+            { text: "Sim", onPress: () => navigation.navigate('Cadastro') }
+          ]
+        );
+        setPostText('')
+        setSelectedValue('')
+        setQtde('')
+        setId('')
+        setStatus('')
+      }
+    })
+  }
+
+  function onRefresh() {
+    //Vai limpar o useState data que está armazenado os Dados da API
+    //Vai obter os dados mais recentes, da API
+    //BuscarRecursos();
+  }
 
   function Horario() {
     let d = new Date();
@@ -79,22 +193,6 @@ export default function Solicitacao({ navigation: { goBack, navigate } }) {
     }
   }
 
-  function onRefresh() {
-    //Vai limpar o useState data que está armazenado os Dados da API
-    //Vai obter os dados mais recentes, da API
-    //BuscarRecursos();
-  }
-  function color(item) {
-    if(item=='ATIVO'){
-      return <Animated.Image style={styles.sttsImage} source={require('../../../assets/ativo.png')} />
-    }
-    if(item=='ANDAMENTO'){
-      return <Animated.Image style={styles.sttsImage} source={require('../../../assets/andamento.png')} />
-    } else {
-      return <Animated.Image style={styles.sttsImage} source={require('../../../assets/pendente.png')} />
-    }
-  }
-
   return (
     <ScrollView 
       style={styles.container}
@@ -109,7 +207,7 @@ export default function Solicitacao({ navigation: { goBack, navigate } }) {
               width: logo.x,
               height: logo.y
             }} 
-            source={require('../../../assets/logo1.png')} 
+            source={require('../../../../../assets/logo1.png')} 
             />
           
           <Text style={styles.textHeader}>
@@ -184,74 +282,18 @@ export default function Solicitacao({ navigation: { goBack, navigate } }) {
           <View style={styles.viewRecurso}>
             <Text style={styles.textRecurso}>Solicitações</Text>
           </View>
-            
-                {inReload
-                  ?
-                  <View style={styles.viewFlatList}>
-                    <ActivityIndicator 
-                      size="large" 
-                      color="#087E85" 
-                      style={{ 
-                        justifyContent: "center",
-                        alignItems: "center",
-                        flex: 1,
-                      }}
-                    />
-                  </View>
-                  :
-                  <SafeAreaView style={styles.viewFlatList}>
-                    <FlatList 
-                      data={api}
-                      keyExtractor={item => item._id}
-                      scrollEnabled={false}
-                      renderItem={( {item} ) => 
-                          <TouchableOpacity 
-                            onPress={ () => {navigate('EditarSolicitacao', {itemId: item})} } 
-                            style={styles.flatList}
-                          >
-                            <View style={styles.ViewProfessor}>
-                              <Text style={styles.textProfessor}>Docente:</Text>
-                              <Text style={styles.textNomeProfessor}>{item.professor}</Text>
-                            </View>
-                            <View style={styles.ViewDate}>
-                              <View>
-                                <Text style={styles.textDate}>Data:</Text>
-                                <Text style={styles.textNDate}>{item.data}</Text>
-                              </View>
-                              <View>
-                                <Text style={styles.textDate}>Solicitado em:</Text>
-                                <Text style={styles.textNDate}>{item.created}</Text>
-                              </View>
-                            </View>
-                            <View style={styles.ViewHorario}>
-                              <Text style={styles.textHorario}>Horário:</Text>
-                              <Text style={styles.textNomeHorario}>{item.horario[0]}</Text>
-                            </View>
-                            <View style={styles.ViewSala}>
-                              <Text style={styles.textSala}>Sala:</Text>
-                              <Text style={styles.textNomeSala}>{item.sala}</Text>
-                            </View>
-                            <View style={styles.ViewStts}>
-                              <Text style={styles.textStts}>Status:</Text>
-                              <View style={styles.ViewNomeStts}> 
-                                <Text style={styles.textNomeStts}>{color(item.stts)}</Text>
-                              </View>
-                            </View>
-                          </TouchableOpacity>
-                      }
-                    />
-                  </SafeAreaView>
-                }
-          
-        </View>
 
-        
+        </View>      
+      
+        <View>
+          <Text>{NameProfessor}</Text>
+        </View>
 
         <View style={styles.btnVoltarView}>
 
           <TouchableOpacity 
             style={styles.btnVoltar}
-            onPress={ ()=> navigate('Dashboard')}
+            onPress={ ()=> navigation.navigate('Solicitacao')}
             > 
             <Text style={styles.textVoltar}>Voltar</Text>
           </TouchableOpacity>

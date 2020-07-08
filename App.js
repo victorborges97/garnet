@@ -14,6 +14,7 @@ import Cadastro from './src/pages/adm/cadastro-recurso/index';
 import Solicitacao from './src/pages/adm/solicitacoes/index';
 import EditarRecurso from './src/pages/adm/cadastro-recurso/ComponenteRecursos/editar/index';
 import CadastrarRecurso from './src/pages/adm/cadastro-recurso/ComponenteRecursos/cadastrar';
+import EditarSolicitacao from './src/pages/adm/solicitacoes/ComponenteRecursos/editar/index';
 
 
 export default function App() {
@@ -47,6 +48,12 @@ export default function App() {
             }}
           />
           <Stack.Screen name="Solicitacao" component={Solicitacao} 
+            options={{
+              headerTransparent: true,
+              headerTitle: null,
+            }}
+          />
+          <Stack.Screen name="EditarSolicitacao" component={EditarSolicitacao} 
             options={{
               headerTransparent: true,
               headerTitle: null,
