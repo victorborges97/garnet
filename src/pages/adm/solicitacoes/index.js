@@ -85,7 +85,7 @@ export default function Solicitacao({ navigation: { goBack, navigate } }) {
     //BuscarRecursos();
   }
   function color(item) {
-    if(item=='ATIVO'){
+    if(item=='ATENDIDO'){
       return <Animated.Image style={styles.sttsImage} source={require('../../../assets/ativo.png')} />
     }
     if(item=='ANDAMENTO'){
@@ -220,21 +220,22 @@ export default function Solicitacao({ navigation: { goBack, navigate } }) {
                               </View>
                               <View>
                                 <Text style={styles.textDate}>Solicitado em:</Text>
-                                <Text style={styles.textNDate}>{item.created}</Text>
+                                <Text style={styles.textNDate}>{item.createdAt}</Text>
                               </View>
                             </View>
                             <View style={styles.ViewHorario}>
                               <Text style={styles.textHorario}>Horário:</Text>
-                              <Text style={styles.textNomeHorario}>{item.horario[0]}</Text>
+                              <Text style={styles.textNomeHorario}>{item.horarioInicio}</Text>
+                              <Text style={styles.textNomeHorario}>{item.horarioFinal}</Text>
                             </View>
                             <View style={styles.ViewSala}>
                               <Text style={styles.textSala}>Sala:</Text>
-                              <Text style={styles.textNomeSala}>{item.sala}</Text>
+                              <Text style={styles.textNomeSala}>{item.salareal}</Text>
                             </View>
                             <View style={styles.ViewStts}>
                               <Text style={styles.textStts}>Status:</Text>
                               <View style={styles.ViewNomeStts}> 
-                                <Text style={styles.textNomeStts}>{color(item.stts)}</Text>
+                                <Text style={styles.textNomeStts}>{color(item.completed)}</Text>
                               </View>
                             </View>
                           </TouchableOpacity>

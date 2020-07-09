@@ -77,258 +77,76 @@ const styles = StyleSheet.create({
     color: '#525252',
     padding: 5,
   },
-  Descricao: {
-    flexDirection: 'row',
-    padding: 7,
-  },
-  ViewFiltro1: {
-    flexDirection: 'row',
-    justifyContent:'center',
-    alignItems: 'center',
-    width: 70,
+  viewNomeSolicitado: {
+    flex: 1,
+    borderColor: '#ABABAB',
+    borderWidth: 0.5,
+    width:'97%',
+    borderRadius: 5,
     marginBottom: 5,
+    padding:5,
+    backgroundColor: '#F5F5F5'
   },
-  ViewFiltro2: {
-    flexDirection: 'row',
-    justifyContent:'center',
-    alignItems: 'center',
-    width: 70,
-    marginBottom: 5,
+  textNomeSolicitado: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color:'#108B93',
+  },
+  ViewDadosEditar: {
+    width:'97%',
+    flex: 1,
+  },
+  //Texto Header de Solicitações
+  TextHeaderSolicitacoes: {
+    fontWeight: 'bold',
+    color:'#525252',
+  },
+
+  //Solicitação Descrição, 
+  TextinputDescri: {
+    color:'#525252',
+    height: 80,
+    textAlignVertical: "top"
   },
   input: {
     borderColor: '#ABABAB',
     borderWidth: 0.5,
     borderRadius: 8,
     width: '100%',
-    fontSize: 13,
-    padding: 3,
-    color:'#525252',
-    height: 27,
+    padding: 5,
+    marginBottom: 6,
   },
-  ViewinputStatus: {
-    borderColor: '#ABABAB',
-    borderWidth: 0.5,
-    borderRadius: 8,
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    width: 70,
 
-  },
-  ViewinputDocente: {
-    borderColor: '#ABABAB',
-    borderWidth: 0.5,
-    borderRadius: 8,
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    width: 88,
-  },
-  textDescricao: {
-    fontSize: 14,
-    color: '#525252'
-  },
-  textDocente: {
-    fontSize: 14,
-    color: '#525252',
-    marginLeft: 2,
-  },
-  textDisciplina: {
-    fontSize: 14,
-    color: '#525252',
-    marginLeft: 2,
-  },
-  ViewInputStatus: {
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    width: 70
-  },
-  btnheader: {
-    flex: 1,
-    flexDirection: "row",
-    
-  },
-  btnbarrapesquisa: {
-    backgroundColor:'#E4E4E4',
-    borderRadius: 8,
-    alignItems:'center',
-    justifyContent:'center',
-    width: 102,
-    height: 27,
-    marginLeft: 2,
-  },
-  textBtn: {
-    fontSize: 15,
-    color: '#525252',
-  },
-  textBtnNovo: {
-    fontSize: 15,
-    color: '#fff',
-  },
-  btnbarranovo: {
-    backgroundColor:'#108B93',
-    borderRadius: 8,
-    alignItems:'center',
-    justifyContent:'center',
-    width: 157,
-    height: 27,
-    margin: 2
-  },
-  btnbarranovo: {
-    backgroundColor:'#108B93',
-    borderRadius: 8,
-    alignItems:'center',
-    justifyContent:'center',
-    width: 157,
-    height: 27,
-    margin: 2
-  },
-  viewRecurso: {
-    flex: 1,
-    borderColor: '#ABABAB',
-    borderWidth: 0.5,
-    width:'97%',
-    borderRadius: 5,
-    
-    padding:5,
-    backgroundColor: '#F5F5F5'
-  },
-  textRecurso: {
-    fontSize: 14,
+  //Solicitação Disciplinas, 
+  TextHeaderDisciplina: {
     fontWeight: 'bold',
     color:'#525252',
   },
-
-  viewFlatList: {
-    flex: 1,
-    //borderColor: '#ABABAB',
-    //borderWidth: 0.5,
-    width:'99%',
-    //borderRadius: 5,
-    
-    padding:5,
-    backgroundColor: '#fff'
+  TextinputDisciplina: {
+    color:'#525252',
+    textAlignVertical: "top"
   },
-  barraDescricao: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    
-  },
-  /*Styles Flatlist*/
-  flatList: {
-    flexDirection: 'row',
-    // justifyContent: 'space-between',
-    height: 94,
-    borderColor: '#E4E4E4',
-    borderWidth: 1,
-    backgroundColor: '#F5F5F5'
-  },
-
-  /*Styles Dentro do Flatlist*/
-  ViewProfessor: {
-    flexDirection: "column",
-    //backgroundColor: '#3a3a',
-    padding: 3,
-    width: 65
-  },
-  textProfessor: {
-    fontWeight: 'bold',
-    color: '#525252',
-    fontSize: 11,
-    fontFamily: "Roboto",
-  },
-  textNomeProfessor: {
-    fontWeight: 'normal',
-    color: '#525252',
-    fontSize: 11,
-    fontFamily: "Roboto",
-  },
-  //-------------------
-  ViewDate: {
-    flexDirection: "column",
-    //backgroundColor: '#3a3b',
-    padding: 3,
-    width: 80,
-    marginLeft: 2
-  },
-  textDate: {
-    fontWeight: 'bold',
-    color: '#525252',
-    fontSize: 11,
-    fontFamily: "Roboto",
-  },
-  textNDate: {
-    fontWeight: 'normal',
-    color: '#525252',
-    fontSize: 11,
-    fontFamily: "Roboto",
-  },
-  //------------------------
-  ViewHorario: {
-    flexDirection: "column",
-    //backgroundColor: '#3a3a',
-    padding: 3,
-    width: 125,
-    marginLeft: 2
-  },
-  textHorario: {
-    fontWeight: 'bold',
-    color: '#525252',
-    fontSize: 11,
-    fontFamily: "Roboto",
-  },
-  textNomeHorario: {
-    fontWeight: 'normal',
-    color: '#525252',
-    fontSize: 11,
-    fontFamily: "Roboto",
-  },
-  //------------------------
-  ViewSala: {
-    flexDirection: "column",
-    //backgroundColor: '#3a3a',
-    padding: 3,
-    width: 40,
-    marginLeft: 2
-  },
-  textSala: {
-    fontWeight: 'bold',
-    color: '#525252',
-    fontSize: 11,
-    fontFamily: "Roboto",
-  },
-  textNomeSala: {
-    fontWeight: 'normal',
-    color: '#525252',
-    fontSize: 11,
-    fontFamily: "Roboto",
-  },
-  //------------------------
-  ViewStts: {
-    flexDirection: "column",
-    //backgroundColor: '#3a3a',
-    padding: 3,
-    marginLeft: 2
-    
-  },
-  ViewNomeStts: {
+  inputDisciplina: {
+    borderColor: '#ABABAB',
+    borderWidth: 0.5,
+    borderRadius: 8,
+    width: '100%',
+    padding: 5,
+    height: 33,
     justifyContent: 'center',
-    height: "100%",
-    width:"100%",
-    paddingBottom:"30%",
-    borderColor:"#0b0",
-    //borderWidth:1
+    marginBottom: 6,
   },
-  textStts: {
-    fontWeight: 'bold',
-    color: '#525252',
-    fontSize: 11,
-    fontFamily: "Roboto",
-    
+  //Solicitação Disciplinas,
+  inputDateSalaQtde: {
+    borderColor: '#ABABAB',
+    borderWidth: 0.5,
+    borderRadius: 8,
+    width: "100%",
+    padding: 5,
+    height: 33,
+    justifyContent: 'center',
+    marginBottom: 6,
   },
-  sttsImage: {
-    width:20,
-    height:20,
-    
-  }
 });
 
 export default styles;

@@ -11,8 +11,10 @@ import {
   Picker,
   AsyncStorage,
   Alert,
-  RefreshControl
+  RefreshControl,
+  
 } from 'react-native';
+
 
 import styles from './styles';
 
@@ -39,22 +41,37 @@ export default function EditarSolicitacao({ route, navigation}) {
   
   const [id, setId] = useState('');
   const [NameProfessor,setNameProfessor] = useState('');
-  const [dataSolicitada,setDataSolicitada] = useState('');
-  const [dataFezSolicitacao,setDataFezSolicitacao] = useState('');
-  const [horarioSolic,setHorarioSolic] = useState({});
-  const [salaSolic,setSalaSolic] = useState('');
-  const [statusSolic,setStts] = useState('');
-  
+  const [dataSolicitada,setDataSolicitada] = useState(''); //Data para quando quer o recurso
+  const [dataFezSolicitacao,setDataFezSolicitacao] = useState(''); //Data que solicitou
+  const [horarioinicio,setHorarioInicio] = useState({}); //Horario Inicial solicitada
+  const [horariofinal,setHorarioFinal] = useState({}); //Horario Final Solicitado
+  const [salaSolic,setSalaSolic] = useState(''); //Sala solicitada
+  const [statusSolic,setStts] = useState(''); //Status da solicitação
+  const [descri,setDescricao] = useState(''); //Descrição
+  const [Disciplina,setDisciplina] = useState(''); //Disciplina 1
+  const [Disciplina2,setDisciplina2] = useState(''); //Disciplina 2
+  const [qtdealunos,setQtdeAlunos] = useState(''); //Quantidade de Alunos que vai ter
+  const [recursos,setRecursos] = useState(''); //Recursos solicitado
+  const [observacao,setObservacao] = useState(''); //Observações
+
+  const [checked, setChecked] = useState('frist')
 
   const Refresh = () => {
     if(inReload){
       setId(itemId._id)
       setNameProfessor(itemId.professor)
       setDataSolicitada(itemId.data)
-      setDataFezSolicitacao(itemId.created)
-      //setHorarioSolic(JSON.parse(itemId.horario))
-      setSalaSolic(itemId.sala)
-      setStts(itemId.stts)
+      setDataFezSolicitacao(itemId.createdAt)
+      //setHorarioInicio(itemId.horarioInicio)
+      //setHorarioFinal(itemId.horarioFinal)
+      setSalaSolic(itemId.salareal)
+      setStts(itemId.completed)
+      setDescricao(itemId.descricao)
+      setDisciplina(itemId.disciplina)
+      setDisciplina2(itemId.disciplina2)
+      setRecursos(itemId.recsolicitado)
+      setQtdeAlunos(itemId.qdteAlunos)
+      setObservacao(itemId.observacoes)
 
     }
     Horario()
@@ -220,75 +237,111 @@ export default function EditarSolicitacao({ route, navigation}) {
 
         <View style={styles.ViewDados}>
           <View style={styles.ViewTextHeader}>
-              <Text style={styles.TextHeaderDados}>Solicitações</Text>
-          </View>
-
-          <View > 
-            <View style={styles.ViewFiltro1}>
-              <Text style={styles.textDescricao}>Status: </Text>
-              <View style={styles.ViewinputStatus}>
-                <Picker 
-                  style={styles.input}
-                  selectedValue={selectedValue}
-                  onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                >
-                  <Picker.Item label="TODOS" value="TODOS"></Picker.Item>
-                  <Picker.Item label="Audiovisual" value="Audiovisual"></Picker.Item>
-                  <Picker.Item label="Administrativo" value="adm"></Picker.Item>
-                </Picker>
-              </View>
-              <Text style={styles.textDisciplina}>Disciplina: </Text>
-              <View style={styles.ViewinputStatus}>
-                <TextInput 
-                  value={""}
-                  autoCorrect={false} 
-                  onChangeText={() => {}}
-                />
-              </View>
-              <TouchableOpacity 
-                style={styles.btnbarrapesquisa}
-                onPress={ ()=>{} }
-              ><Text style={styles.textBtn}>Consultar</Text>
-              </TouchableOpacity>
-            </View>
-
-            <View style={styles.ViewFiltro2}>
-              <Text style={styles.textDescricao}>Data: </Text>
-              <View style={styles.ViewinputStatus}>
-                <TextInput 
-                  value={""}
-                  autoCorrect={false} 
-                  onChangeText={() => {}}
-                />
-              </View>
-              <Text style={styles.textDocente}>Docente: </Text>
-              <View style={styles.ViewinputDocente}>
-                <TextInput 
-                  value={""}
-                  autoCorrect={false} 
-                  onChangeText={() => {}}
-                />
-              </View>
-              <TouchableOpacity 
-                style={styles.btnbarrapesquisa}
-                onPress={ ()=>{}}
-                ><Text style={styles.textBtn}>Limpar</Text>
-              </TouchableOpacity>
-            
-            </View>
-          </View>
-            
+              <Text style={styles.TextHeaderDados}>Solicitação</Text>
+          </View>            
           
-          <View style={styles.viewRecurso}>
-            <Text style={styles.textRecurso}>Solicitações</Text>
+          <View style={styles.viewNomeSolicitado}>
+            <Text style={styles.textNomeSolicitado}>{NameProfessor}</Text>
+          </View>
+
+          <View style={styles.ViewDadosEditar}>
+
+            <View>
+              <Text style={styles.TextHeaderSolicitacoes}>
+                Descrição:
+              </Text>
+              <View style={styles.input}>
+                <TextInput style={styles.TextinputDescri} multiline editable={false}>
+                  {descri}
+                </TextInput>
+              </View>
+            </View>
+
+
+            <View>
+              <Text style={styles.TextHeaderSolicitacoes}>
+                Disciplina:
+              </Text>
+              <View style={styles.inputDisciplina}>
+                <TextInput style={styles.TextinputDisciplina} editable={false}>
+                  {Disciplina}
+                </TextInput>
+              </View>
+
+              <Text style={styles.TextHeaderSolicitacoes}>
+                Disciplina 2:
+              </Text>
+              <View style={styles.inputDisciplina}>
+                <TextInput style={styles.TextinputDisciplina} editable={false}>
+                  {Disciplina2}
+                </TextInput>
+              </View>
+            </View>
+
+            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              
+              <View style={{width:'100%', flex:1, paddingRight:'1.5%',}}>
+                <Text style={styles.TextHeaderSolicitacoes}>
+                  Data:
+                </Text>
+                <View style={styles.inputDateSalaQtde}>
+                  <TextInput style={styles.TextinputDisciplina} editable={false}>
+                    {dataSolicitada}
+                  </TextInput>
+                </View>
+              </View>
+
+              <View style={{width:'100%', flex:1, paddingRight:'1.5%',}}>
+                <Text style={styles.TextHeaderSolicitacoes}>
+                  Sala real:
+                </Text>
+                <View style={styles.inputDateSalaQtde}>
+                  <TextInput style={styles.TextinputDisciplina} editable={false}>
+                    {salaSolic}
+                  </TextInput>
+                </View>
+              </View>
+
+              <View style={{width:'100%', flex:1}}>
+                <Text style={styles.TextHeaderSolicitacoes}>
+                  Qtde de Alunos:
+                </Text>
+                <View style={styles.inputDateSalaQtde}>
+                  <TextInput style={styles.TextinputDisciplina} editable={false} >
+                    {qtdealunos}
+                  </TextInput>
+                </View>
+              </View>
+
+            </View>
+
+            <View>
+              <Text style={styles.TextHeaderSolicitacoes}>
+                Observações:
+              </Text>
+              <View style={styles.input}>
+                <TextInput 
+                  style={styles.TextinputDescri} 
+                  multiline
+                >
+                  {observacao}
+                </TextInput>
+              </View>
+            </View>
+
+            <View>
+              <Text style={styles.TextHeaderSolicitacoes}>
+                Horário:
+              </Text>
+              <View style={styles.input}>
+                  
+              </View>
+            </View>
+
           </View>
 
         </View>      
       
-        <View>
-          <Text>{NameProfessor}</Text>
-        </View>
-
         <View style={styles.btnVoltarView}>
 
           <TouchableOpacity 
