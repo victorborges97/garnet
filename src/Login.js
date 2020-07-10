@@ -13,7 +13,8 @@ import {
   StatusBar,
   AsyncStorage,
   Alert,
-  Platform
+  Platform,
+  ActivityIndicator
 } from 'react-native';
 
 import { base_URL_authenticate } from './services/api'
@@ -23,15 +24,8 @@ export default function Login({navigation}) {
   const [logo] = useState(new Animated.ValueXY({x: 309, y: 201}));
   const [usuario,setUsuario] = useState('')
   const [password,setPassword] = useState('')
-
-  useEffect(()=> {
-    if (Platform.OS === "android") { 
-      //aqui pegamos a informação quando o teclado abre(Show) e fecha(Hide)
-      keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', keyboardDidShow)
-      keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', keyboardDidHide)
-    }
-  })
-//função para animação da imagem logo, que diminiu ela com o teclado abre
+  const [time,setTime] =  useState(false)
+  //função para animação da imagem logo, que diminiu ela com o teclado abre
   function keyboardDidShow(){
     Animated.parallel([
       Animated.timing(logo.x, {
@@ -58,6 +52,7 @@ export default function Login({navigation}) {
     ]).start();
   }
   function inLoggin() {
+    setTime(true)
     //o ip vai mudar dependendo do ip da maquina que for roda o server
     fetch(base_URL_authenticate, {
       method:"POST",
@@ -78,8 +73,11 @@ export default function Login({navigation}) {
         AsyncStorage.setItem('user', JSON.stringify(res.user));
         AsyncStorage.setItem('name', JSON.stringify(res.user.name));
         AsyncStorage.setItem('token', res.token);
+        const identi = res.user.identific
+
+        setTime(false)
+        loginIdentific(identi)
         
-        navigation.navigate('Dashboard')
         setUsuario('')
         setPassword('')
       } else{
@@ -97,11 +95,27 @@ export default function Login({navigation}) {
           ],
           { cancelable: false }
         );
+        setTime(false)
       }
     })
     .done();//Não sei pra que.
-
   }
+  //Função para identificar se é professor ou adm
+  function loginIdentific(identi) {
+    if(identi === "1") {
+      navigation.navigate('Dashboard')
+    } else {
+      navigation.navigate('DashboardPFV')
+    }
+  };
+
+  useEffect(()=> {
+    if (Platform.OS === "android") { 
+      //aqui pegamos a informação quando o teclado abre(Show) e fecha(Hide)
+      keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', keyboardDidShow)
+      keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', keyboardDidHide)
+    }
+  })
 
   
   return (
@@ -149,7 +163,22 @@ export default function Login({navigation}) {
               style={styles.btnSubmit}
               onPress={ () => inLoggin()/*navigation.navigate('Dashboard')*/}
             > 
-              <Text style={styles.textSubmit}>Acessar</Text>
+              {time
+                ?
+                <View style={styles.viewFlatList}>
+                <ActivityIndicator 
+                  size="small" 
+                  color="#fff" 
+                  style={{ 
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flex: 1,
+                  }}
+                />
+                </View>
+                :
+                <Text style={styles.textSubmit}>Acessar</Text>
+              }
             </TouchableOpacity>
           </View>
         </View>
