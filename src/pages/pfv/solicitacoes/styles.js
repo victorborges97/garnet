@@ -324,10 +324,26 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto",
     
   },
-  sttsImage: {
+  CircleRed: {
     width:20,
     height:20,
-    
+    borderRadius: 50,
+    borderWidth: 10,
+    borderColor: "#E51111",
+  },
+  CircleBlue: {
+    width:20,
+    height:20,
+    borderRadius: 50,
+    borderWidth: 10,
+    borderColor: "#3690E9",
+  },
+  CircleGreen: {
+    width:20,
+    height:20,
+    borderRadius: 50,
+    borderWidth: 10,
+    borderColor: "#12A93B",
   }
 });
 

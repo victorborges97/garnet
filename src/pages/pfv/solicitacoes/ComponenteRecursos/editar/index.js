@@ -17,7 +17,7 @@ import {
 
 
 import styles from './styles';
-
+import moment from 'moment';
 import { base_URL_DELETE_PUT_GET_POST_Recursos } from '../../../../../services/api'
 
 export default function EditarSolicitacaoPFV({ route, navigation}) {
@@ -55,6 +55,8 @@ export default function EditarSolicitacaoPFV({ route, navigation}) {
   const [observacao,setObservacao] = useState(''); //Observações
 
   const [checked, setChecked] = useState('frist')
+  var formatH = 'HH:mm'
+  var formatD = 'DD/MM/YYYY'
 
   const Refresh = () => {
     if(inReload){
@@ -286,7 +288,7 @@ export default function EditarSolicitacaoPFV({ route, navigation}) {
                 </Text>
                 <View style={styles.inputDateSalaQtde}>
                   <TextInput style={styles.TextinputDisciplina} editable={false}>
-                    {dataSolicitada}
+                    {moment(dataSolicitada).format(formatD)}
                   </TextInput>
                 </View>
               </View>
