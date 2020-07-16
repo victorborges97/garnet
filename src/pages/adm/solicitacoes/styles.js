@@ -304,18 +304,14 @@ const styles = StyleSheet.create({
   //------------------------
   ViewStts: {
     flexDirection: "column",
-    //backgroundColor: '#3a3a',
     padding: 3,
     marginLeft: 2
     
   },
   ViewNomeStts: {
     justifyContent: 'center',
-    height: "100%",
-    width:"100%",
-    paddingBottom:"30%",
-    borderColor:"#0b0",
-    //borderWidth:1
+    alignItems: 'center',
+    height: "70%",
   },
   textStts: {
     fontWeight: 'bold',
@@ -324,10 +320,26 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto",
     
   },
-  sttsImage: {
+  CircleRed: {
     width:20,
     height:20,
-    
+    borderRadius: 50,
+    borderWidth: 10,
+    borderColor: "#E51111",
+  },
+  CircleBlue: {
+    width:20,
+    height:20,
+    borderRadius: 50,
+    borderWidth: 10,
+    borderColor: "#3690E9",
+  },
+  CircleGreen: {
+    width:20,
+    height:20,
+    borderRadius: 50,
+    borderWidth: 10,
+    borderColor: "#12A93B",
   }
 });
 

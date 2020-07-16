@@ -25,6 +25,15 @@ export default function Login({navigation}) {
   const [usuario,setUsuario] = useState('')
   const [password,setPassword] = useState('')
   const [time,setTime] =  useState(false)
+  const [focusPasswordInput,setfFocusPasswordInput] =  useState(false)
+  const [focusUserInput,setfFocusUserInput] =  useState(true)
+
+  function handleTitleInputSubmit() {
+    setfFocusUserInput(false)
+    setfFocusPasswordInput(true)
+    console.log(focusPasswordInput)
+  }
+
   //função para animação da imagem logo, que diminiu ela com o teclado abre
   function keyboardDidShow(){
     Animated.parallel([
@@ -145,18 +154,27 @@ export default function Login({navigation}) {
               style={styles.input} 
               placeholder="Usuário"
               autoCorrect={false}
+              autoCapitalize="none"
               value={usuario} 
               onChangeText={(text) => {setUsuario(text)}}
+              underlineColorAndroid="transparent"
+              autoFocus
+              onSubmitEditing={() => {handleTitleInputSubmit()}}
+              returnKeyType="next"
               />
 
             <TextInput 
               style={{color:'#525252'}}
-              secureTextEntry={true} 
+              secureTextEntry 
               style={styles.input} 
               placeholder="Senha" 
               autoCorrect={false}
               value={password} 
               onChangeText={(text) => {setPassword(text)}}
+              underlineColorAndroid="transparent"
+              autoFocus={focusPasswordInput}
+              returnKeyType="send"
+              onSubmitEditing={() => {inLoggin()}}
               />
 
             <TouchableOpacity 

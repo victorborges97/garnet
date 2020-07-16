@@ -19,34 +19,41 @@ import {
 } from 'react-native';
 
 import styles from './styles';
-import api from '../../../services/apiteste'
+import moment from 'moment';
+import { base_URL_DELETE_PUT_GET_POST_Solicitacao } from '../../../services/api'
 
 export default function Solicitacao({ navigation: { goBack, navigate } }) {
 
   const [logo] = useState(new Animated.ValueXY({x: 244, y: 53}));
+  const [solictacoes, setSolicitacoes] = useState( )
   const [horario,setHorario] = useState('')
   const [Name,setName] = useState('');
   const [inReload,setInReload] = useState(true);
-  //const [data,setData] = useState([])
+  const [token,setToken] = useState('');
   const [selectedValue,setSelectedValue] = useState("TODOS")
   YellowBox.ignoreWarnings([
     'VirtualizedLists should never be nested', // TODO: Remove when fixed
   ])
+  var formatH = 'HH:mm'
+  var formatD = 'DD/MM/YYYY'
 
+  function Storage(){
   AsyncStorage.getItem('name', (err, result)=> {
     if(result != null){
       setName(JSON.parse(result))
     }
   });
-
-  useEffect(()=>{
-    Horario()
-    refresh()
+  AsyncStorage.getItem('token', (err, result)=> {
+    if(result != null){
+      setToken(result)
+    }
   })
+  }
 
   function refresh() {
     if(inReload) {
-      setInReload(false)
+      solicit()
+      Storage()
     }
   }
 
@@ -82,18 +89,46 @@ export default function Solicitacao({ navigation: { goBack, navigate } }) {
   function onRefresh() {
     //Vai limpar o useState data que está armazenado os Dados da API
     //Vai obter os dados mais recentes, da API
-    //BuscarRecursos();
+    solicit()
+    console.log("passou aqui")
   }
+
   function color(item) {
     if(item=='ATENDIDO'){
-      return <Animated.Image style={styles.sttsImage} source={require('../../../assets/ativo.png')} />
+      return <View style={styles.CircleGreen} />
     }
     if(item=='ANDAMENTO'){
-      return <Animated.Image style={styles.sttsImage} source={require('../../../assets/andamento.png')} />
+      return <View style={styles.CircleBlue} />
     } else {
-      return <Animated.Image style={styles.sttsImage} source={require('../../../assets/pendente.png')} />
+      return <View style={styles.CircleRed} />
     }
   }
+
+  function solicit() {
+    //o ip vai mudar dependendo do ip da maquina que for roda o server
+    fetch(`${base_URL_DELETE_PUT_GET_POST_Solicitacao}`, {
+      method:"GET",
+      //aqui vou poder mandar o token para alguma requisição
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    //recebo a resposta do server
+    .then(res=>res.json())
+    .then ((res) => {
+      setSolicitacoes(res.data)
+      setInReload(false)
+    })
+  }
+
+
+  useEffect(()=>{
+    Horario()
+    refresh()
+    console.log("passou aqui useEffect")
+  })
+
 
   return (
     <ScrollView 
@@ -201,7 +236,7 @@ export default function Solicitacao({ navigation: { goBack, navigate } }) {
                   :
                   <SafeAreaView style={styles.viewFlatList}>
                     <FlatList 
-                      data={api}
+                      data={solictacoes}
                       keyExtractor={item => item._id}
                       scrollEnabled={false}
                       renderItem={( {item} ) => 
@@ -216,17 +251,17 @@ export default function Solicitacao({ navigation: { goBack, navigate } }) {
                             <View style={styles.ViewDate}>
                               <View>
                                 <Text style={styles.textDate}>Data:</Text>
-                                <Text style={styles.textNDate}>{item.data}</Text>
+                                <Text style={styles.textNDate}>{moment(item.data).format(formatD)}</Text>
                               </View>
                               <View>
                                 <Text style={styles.textDate}>Solicitado em:</Text>
-                                <Text style={styles.textNDate}>{item.createdAt}</Text>
+                                <Text style={styles.textNDate}>{moment(item.createdAt).format(formatD)}</Text>
                               </View>
                             </View>
                             <View style={styles.ViewHorario}>
                               <Text style={styles.textHorario}>Horário:</Text>
-                              <Text style={styles.textNomeHorario}>{item.horarioInicio}</Text>
-                              <Text style={styles.textNomeHorario}>{item.horarioFinal}</Text>
+                              <Text style={styles.textNomeHorario}>{moment(item.horarioInicio).format(formatH)}</Text>
+                              <Text style={styles.textNomeHorario}>{moment(item.horarioFinal).format(formatH)}</Text>
                             </View>
                             <View style={styles.ViewSala}>
                               <Text style={styles.textSala}>Sala:</Text>
@@ -235,7 +270,7 @@ export default function Solicitacao({ navigation: { goBack, navigate } }) {
                             <View style={styles.ViewStts}>
                               <Text style={styles.textStts}>Status:</Text>
                               <View style={styles.ViewNomeStts}> 
-                                <Text style={styles.textNomeStts}>{color(item.completed)}</Text>
+                                <View>{color(item.completed)}</View>
                               </View>
                             </View>
                           </TouchableOpacity>
