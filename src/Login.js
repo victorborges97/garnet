@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import {
   View, 
@@ -20,6 +20,8 @@ import {
 import { base_URL_authenticate } from './services/api'
 
 export default function Login({navigation}) {
+
+  const passwordRef = useRef()
   
   const [logo] = useState(new Animated.ValueXY({x: 309, y: 201}));
   const [usuario,setUsuario] = useState('')
@@ -129,10 +131,10 @@ export default function Login({navigation}) {
   
   return (
 
-    <KeyboardAvoidingView style={styles.container}>
+    <View style={styles.container}>
       
       <StatusBar translucent backgroundColor={'#FFF'} barStyle='dark-content' />
-        <View style={styles.header}>
+        <KeyboardAvoidingView style={styles.header}>
         
           <Animated.Image 
             style={{
@@ -159,7 +161,7 @@ export default function Login({navigation}) {
               onChangeText={(text) => {setUsuario(text)}}
               underlineColorAndroid="transparent"
               autoFocus
-              onSubmitEditing={() => {handleTitleInputSubmit()}}
+              onSubmitEditing={() => {passwordRef.current.focus()}}
               returnKeyType="next"
               />
 
@@ -168,13 +170,12 @@ export default function Login({navigation}) {
               secureTextEntry 
               style={styles.input} 
               placeholder="Senha" 
-              autoCorrect={false}
               value={password} 
               onChangeText={(text) => {setPassword(text)}}
               underlineColorAndroid="transparent"
-              autoFocus={focusPasswordInput}
               returnKeyType="send"
               onSubmitEditing={() => {inLoggin()}}
+              ref={passwordRef}
               />
 
             <TouchableOpacity 
@@ -199,11 +200,11 @@ export default function Login({navigation}) {
               }
             </TouchableOpacity>
           </View>
-        </View>
+        </KeyboardAvoidingView>
 
         
       
-    </KeyboardAvoidingView>
+    </View>
   );
 }
 
