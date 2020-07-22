@@ -53,14 +53,14 @@ export default function Solicitacao({ navigation: { goBack, navigate } }) {
       <Text>{format(parseISO(item.substr(0, 10)),formatD,{locale: pt})}</Text>
     )
   }
-  function formatHORA(item){
-    return (
-      item.forEach(umaparte => (
-        console.log(umaparte.substr(11, 5)),
-        // <Text>{format(umaparte.substr(11, 5),formatH,{locale: pt})}</Text>
-      ))   
-    )
-  }
+  // function formatHORA(item){
+  //   return (
+  //     item.forEach(umaparte => (
+  //       console.log(umaparte.substr(11, 5)),
+  //       // <Text>{format(umaparte.substr(11, 5),formatH,{locale: pt})}</Text>
+  //     ))   
+  //   )
+  // }
 
   function Storage(){
   AsyncStorage.getItem('name', (err, result)=> {
