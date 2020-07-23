@@ -147,6 +147,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 6,
   },
+  //Horario
+  TextinputDescri: {
+    color:'#525252',
+    height: 80,
+    textAlignVertical: "top"
+  },
 });
 
 export default styles;

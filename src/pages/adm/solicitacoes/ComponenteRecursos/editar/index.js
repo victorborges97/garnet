@@ -17,6 +17,7 @@ import {
 
 
 import styles from './styles';
+import moment from 'moment';
 
 import { base_URL_DELETE_PUT_GET_POST_Recursos } from '../../../../../services/api'
 
@@ -54,7 +55,8 @@ export default function EditarSolicitacao({ route, navigation}) {
   const [recursos,setRecursos] = useState(''); //Recursos solicitado
   const [observacao,setObservacao] = useState(''); //Observações
 
-  const [checked, setChecked] = useState('frist')
+  const formatD = "DD/MM/YYYY";
+  const formatH = "HH:mm";
 
   const Refresh = () => {
     if(inReload){
@@ -62,8 +64,8 @@ export default function EditarSolicitacao({ route, navigation}) {
       setNameProfessor(itemId.professor)
       setDataSolicitada(itemId.data)
       setDataFezSolicitacao(itemId.createdAt)
-      //setHorarioInicio(itemId.horarioInicio)
-      //setHorarioFinal(itemId.horarioFinal)
+      setHorarioInicio(itemId.horarioInicio)
+      setHorarioFinal(itemId.horarioFinal)
       setSalaSolic(itemId.salareal)
       setStts(itemId.completed)
       setDescricao(itemId.descricao)
@@ -81,6 +83,44 @@ export default function EditarSolicitacao({ route, navigation}) {
     Refresh()
     setInReload(false)
   })
+
+  function formatHORA0(item) {
+    return(
+      item.map((hora,index) => moment.utc(hora).format(formatH))[0]
+    )
+  };
+  function formatHORA1(item) {
+    return(
+      item.map((hora,index) => moment.utc(hora).format(formatH))[1]
+    )
+  };
+
+  function tempoHora(item) {
+    const h = item.map((hora) => moment.utc(hora).format(formatH))
+
+    if(h==false){
+      return("")
+    }
+    else
+    if(h.filter(hora => hora) < "05"){
+      return("NOITE");
+    }
+    else
+    if(h.filter(hora => hora) < "08"){
+      return("MANHA");
+    }
+    else
+    if(h.filter(hora => hora) < "12"){
+      return("MANHA");
+    }
+    else
+    if(h.filter(hora => hora) < "18"){
+      return("TARDE");
+    }
+    else{
+      return("NOITE");
+    }
+  }
   
   function atualizar() {
     //o ip vai mudar dependendo do ip da maquina que for roda o server
@@ -286,7 +326,7 @@ export default function EditarSolicitacao({ route, navigation}) {
                 </Text>
                 <View style={styles.inputDateSalaQtde}>
                   <TextInput style={styles.TextinputDisciplina} editable={false}>
-                    {dataSolicitada}
+                    {moment(dataSolicitada).format(formatD)}
                   </TextInput>
                 </View>
               </View>
@@ -333,13 +373,96 @@ export default function EditarSolicitacao({ route, navigation}) {
               <Text style={styles.TextHeaderSolicitacoes}>
                 Horário:
               </Text>
-              <View style={styles.input}>
-                  
+              <View style={styles.inputViewHorario}>
+                <View style={styles.ViewHeaderHorario}>
+                  <Text style={styles.TextHeaderHorario1}>Turno</Text>
+                  <Text style={styles.TextHeaderHorario2}>Horário início</Text>
+                  <Text style={styles.TextHeaderHorario2}>Horário término</Text>
+                </View>
+                <View style={styles.ViewHorario}>
+                  <View style={styles.TextHeaderHorario1}>
+                    <Text style={styles.TextTurno}>{tempoHora(horarioinicio)}</Text>
+                  </View>
+                  <View style={styles.TextHeaderHorario2}>
+                    <Text style={styles.TextHorario}>{formatHORA0(horarioinicio)}</Text>
+                  </View>
+                  <View style={styles.TextHeaderHorario2}>
+                    <Text style={styles.TextHorario}>{formatHORA1(horarioinicio)}</Text>
+                  </View>
+                </View>
+
+                <View style={styles.ViewHorario}>
+                  <View style={styles.TextHeaderHorario1}>
+                    <Text style={styles.TextTurno}>{tempoHora(horariofinal)}</Text>
+                  </View>
+                  <View style={styles.TextHeaderHorario2}>
+                    <Text style={styles.TextHorario}>{formatHORA0(horariofinal)}</Text>
+                  </View>
+                  <View style={styles.TextHeaderHorario2}>
+                    <Text style={styles.TextHorario}>{formatHORA1(horariofinal)}</Text>
+                  </View>
+                </View>
               </View>
             </View>
 
-          </View>
+            <View>
+              <Text style={styles.TextHeaderSolicitacoes}>
+                Recurso:
+              </Text>
+              <View style={styles.inputViewRecurso}>
+                <View style={styles.ViewHeaderHorario}>
+                  <Text style={styles.TextHeaderHorario1}>Nome</Text>
+                  <Text style={styles.TextHeaderHorario2}>Quantidade</Text>
+                </View>
+                <View style={styles.ViewHorario}>
+                  <View style={styles.TextHeaderHorario1}>
+                    <Text style={styles.TextTurno}>Charge</Text>
+                  </View>
 
+                  <View style={styles.TextHeaderHorario2}>
+                    <Text style={styles.TextHorario}>1</Text>
+                  </View>
+                </View>
+
+                <View style={styles.ViewHorario}>
+                  <View style={styles.TextHeaderHorario1}>
+                    <Text style={styles.TextTurno}>Charge</Text>
+                  </View>
+
+                  <View style={styles.TextHeaderHorario2}>
+                    <Text style={styles.TextHorario}>1</Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+            
+            <View style={styles.btnVoltarView}>
+
+              <TouchableOpacity 
+                style={styles.btnSituacao}
+                onPress={ ()=> {} }
+              > 
+                <Text style={styles.textVoltar}>Pedente</Text>
+              </TouchableOpacity>
+              <TouchableOpacity 
+                style={styles.btnSituacao}
+                onPress={ ()=> {} }
+              > 
+                <Text style={styles.textVoltar}>Confirmar</Text>
+              </TouchableOpacity>
+              <TouchableOpacity 
+                style={styles.btnSituacao}
+                onPress={ ()=> {} }
+              > 
+                <Text style={styles.textVoltar}>Atender</Text>
+              </TouchableOpacity>
+
+
+
+            </View>
+
+
+          </View>
         </View>      
       
         <View style={styles.btnVoltarView}>

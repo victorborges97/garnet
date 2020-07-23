@@ -147,6 +147,72 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 6,
   },
+  //Campo View Container Horario
+  inputViewHorario:{
+    borderColor: '#ABABAB',
+    borderWidth: 0.5,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+    width: '100%',
+    marginBottom: 6,
+  }
+  ,
+  //Campo Header do Horario
+  ViewHeaderHorario: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  TextHeaderHorario1: {
+    flex: 1.3,
+    padding: 5,
+    fontWeight: 'bold',
+    color:'#525252',
+    justifyContent: "center"
+  },
+  TextHeaderHorario2: {
+    flex: 1,
+    padding: 5,
+    fontWeight: 'bold',
+    color:'#525252',
+    justifyContent: "center"
+  },
+  //Campo dos horarios
+  ViewHorario: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderColor: '#ABABAB',
+    borderWidth: 0.5,
+    width: "100%",
+    height: 25,
+  },
+  //Campo de Texto nos horarios
+  TextTurno: {
+    color: '#525252',
+  },
+  TextHorario: {
+    color: '#525252',
+    textAlign: 'center',
+  },
+  //Campo View Container Recurso
+  inputViewRecurso: {
+    borderColor: '#ABABAB',
+    borderWidth: 0.5,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+    width: '100%',
+    marginBottom: 15,
+  },
+
+
+  //Botão Atender Pedente Confirmar ou Cancelar
+  btnSituacao: {
+    backgroundColor:'#E4E4E4',
+    height: '60%',
+    borderRadius: 8,
+    alignItems:'center',
+    justifyContent:'center',
+    height: 25,
+  },
 });
 
 export default styles;

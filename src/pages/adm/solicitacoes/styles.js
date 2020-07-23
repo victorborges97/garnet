@@ -249,6 +249,13 @@ const styles = StyleSheet.create({
     width: 80,
     marginLeft: 2
   },
+  textDateSolicitacao: {
+    marginTop: 5,
+    fontWeight: 'bold',
+    color: '#525252',
+    fontSize: 11,
+    fontFamily: "Roboto",
+  },
   textDate: {
     fontWeight: 'bold',
     color: '#525252',

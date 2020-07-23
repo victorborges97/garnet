@@ -18,9 +18,6 @@ import {
   YellowBox
 } from 'react-native';
 
-import format from 'date-fns/format'
-import pt from 'date-fns/locale/pt';
-
 import styles from './styles';
 import moment from 'moment';
 import { base_URL_DELETE_PUT_GET_POST_Solicitacao } from '../../../services/api'
@@ -56,7 +53,13 @@ export default function Solicitacao({ navigation: { goBack, navigate } }) {
 
   function tempoHora(item) {
     const h = item.map((hora) => moment.utc(hora).format(formatH))
+    
+    console.log(h)
 
+    if(h==false){
+      return("")
+    }
+    else
     if(h.filter(hora => hora) < "05"){
       return("NOITE - ");
     }
@@ -71,10 +74,6 @@ export default function Solicitacao({ navigation: { goBack, navigate } }) {
     else
     if(h.filter(hora => hora) < "18"){
       return("TARDE - ");
-    }
-    else
-    if(h.filter(hora => hora) < ""){
-      return
     }
     else{
       return("NOITE - ");
@@ -295,7 +294,7 @@ export default function Solicitacao({ navigation: { goBack, navigate } }) {
                                 <Text style={styles.textNDate}>{moment(item.data).format(formatD)}</Text>
                               </View>
                               <View>
-                                <Text style={styles.textDate}>Solicitado em:</Text>
+                                <Text style={styles.textDateSolicitacao}>Solicitado em:</Text>
                                 <Text style={styles.textNDate}>{moment(item.createdAt).format(formatD)}</Text>
                               </View>
                             </View>

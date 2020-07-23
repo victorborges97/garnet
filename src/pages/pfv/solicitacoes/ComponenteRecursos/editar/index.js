@@ -336,7 +336,9 @@ export default function EditarSolicitacaoPFV({ route, navigation}) {
                 Horário:
               </Text>
               <View style={styles.input}>
-                  
+                <Text>Turno</Text>
+                <Text>Horário início</Text>
+                <Text>Horário término</Text>
               </View>
             </View>
 
