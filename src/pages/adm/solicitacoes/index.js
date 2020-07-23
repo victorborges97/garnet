@@ -43,11 +43,43 @@ export default function Solicitacao({ navigation: { goBack, navigate } }) {
 
   //Formatando a hora que vem do db para ficar mais legivel
   function formatHORA(item) {
+
+    item.filter(function(horario) {
+      return horario == "18:30";
+    });
+
     return(
       item.map((hora,index) => moment.utc(hora).format(formatH)
       ).join(" - ")
     )
   };
+
+  function tempoHora(item) {
+    const h = item.map((hora) => moment.utc(hora).format(formatH))
+
+    if(h.filter(hora => hora) < "05"){
+      return("NOITE - ");
+    }
+    else
+    if(h.filter(hora => hora) < "08"){
+      return("MANHA - ");
+    }
+    else
+    if(h.filter(hora => hora) < "12"){
+      return("MANHA - ");
+    }
+    else
+    if(h.filter(hora => hora) < "18"){
+      return("TARDE - ");
+    }
+    else
+    if(h.filter(hora => hora) < ""){
+      return
+    }
+    else{
+      return("NOITE - ");
+    }
+  }
 
   function Storage(){
   AsyncStorage.getItem('name', (err, result)=> {
@@ -269,8 +301,8 @@ export default function Solicitacao({ navigation: { goBack, navigate } }) {
                             </View>
                             <View style={styles.ViewHorario}>
                               <Text style={styles.textHorario}>Horário:</Text>
-                              <Text style={styles.textNomeHorario} >NOITE - {formatHORA(item.horarioInicio)}</Text>
-                              <Text style={styles.textNomeHorario} >{formatHORA(item.horarioFinal)}</Text>
+                              <Text style={styles.textNomeHorario} >{tempoHora(item.horarioInicio)+formatHORA(item.horarioInicio)}</Text>
+                              <Text style={styles.textNomeHorario} >{tempoHora(item.horarioFinal)+formatHORA(item.horarioFinal)}</Text>
                             </View>
                             <View style={styles.ViewSala}>
                               <Text style={styles.textSala}>Sala:</Text>
