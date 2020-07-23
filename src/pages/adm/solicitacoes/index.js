@@ -24,7 +24,6 @@ import pt from 'date-fns/locale/pt';
 import styles from './styles';
 import moment from 'moment';
 import { base_URL_DELETE_PUT_GET_POST_Solicitacao } from '../../../services/api'
-import { parseISO } from 'date-fns';
 
 export default function Solicitacao({ navigation: { goBack, navigate } }) {
 
@@ -35,32 +34,20 @@ export default function Solicitacao({ navigation: { goBack, navigate } }) {
   const [inReload,setInReload] = useState(true);
   const [token,setToken] = useState('');
   const [selectedValue,setSelectedValue] = useState("TODOS")
+
   YellowBox.ignoreWarnings([
     'VirtualizedLists should never be nested', // TODO: Remove when fixed
   ])
-  const formatH = 'HH:mm'
-  const formatD = "dd/MM/yyyy"
-  const dateDB = Solicitacao.data
-  var teste = parseISO("2020-06-24T13:51:45.320+00:00")
-  const isoDate = teste.toISOString();
-  //console.log(format(parseISO("2020-06-24T13:51:45.320+00:00"),formatD,{locale: pt}))
-  //console.log(formatDATA)
-  //console.log(`${isoDate.substr(0, 10)} ${isoDate.substr(11, 5)}`);
-  
-  
-  function formatDATA(item){
-    return (
-      <Text>{format(parseISO(item.substr(0, 10)),formatD,{locale: pt})}</Text>
+  const formatD = "DD/MM/YYYY";
+  const formatH = "HH:mm";
+
+  //Formatando a hora que vem do db para ficar mais legivel
+  function formatHORA(item) {
+    return(
+      item.map((hora,index) => moment.utc(hora).format(formatH)
+      ).join(" - ")
     )
-  }
-  // function formatHORA(item){
-  //   return (
-  //     item.forEach(umaparte => (
-  //       console.log(umaparte.substr(11, 5)),
-  //       // <Text>{format(umaparte.substr(11, 5),formatH,{locale: pt})}</Text>
-  //     ))   
-  //   )
-  // }
+  };
 
   function Storage(){
   AsyncStorage.getItem('name', (err, result)=> {
@@ -81,7 +68,6 @@ export default function Solicitacao({ navigation: { goBack, navigate } }) {
       Storage()
     }
   }
-
 
   function Horario() {
     let d = new Date();
@@ -147,13 +133,11 @@ export default function Solicitacao({ navigation: { goBack, navigate } }) {
     })
   }
 
-
   useEffect(()=>{
     Horario()
     refresh()
     console.log("passou aqui useEffect")
   })
-
 
   return (
     <ScrollView 
@@ -276,17 +260,17 @@ export default function Solicitacao({ navigation: { goBack, navigate } }) {
                             <View style={styles.ViewDate}>
                               <View>
                                 <Text style={styles.textDate}>Data:</Text>
-                                <Text style={styles.textNDate}>{formatDATA(item.data)}</Text>
+                                <Text style={styles.textNDate}>{moment(item.data).format(formatD)}</Text>
                               </View>
                               <View>
                                 <Text style={styles.textDate}>Solicitado em:</Text>
-                                <Text style={styles.textNDate}>{formatDATA(item.createdAt)}</Text>
+                                <Text style={styles.textNDate}>{moment(item.createdAt).format(formatD)}</Text>
                               </View>
                             </View>
                             <View style={styles.ViewHorario}>
                               <Text style={styles.textHorario}>Horário:</Text>
-                              <Text style={styles.textNomeHorario}>{formatHORA(item.horarioInicio)}</Text>
-                              {/* <Text style={styles.textNomeHorario}>{formatHORA(item.horarioFinal)}</Text> */}
+                              <Text style={styles.textNomeHorario} >NOITE - {formatHORA(item.horarioInicio)}</Text>
+                              <Text style={styles.textNomeHorario} >{formatHORA(item.horarioFinal)}</Text>
                             </View>
                             <View style={styles.ViewSala}>
                               <Text style={styles.textSala}>Sala:</Text>

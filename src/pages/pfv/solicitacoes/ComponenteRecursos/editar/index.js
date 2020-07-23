@@ -55,8 +55,8 @@ export default function EditarSolicitacaoPFV({ route, navigation}) {
   const [observacao,setObservacao] = useState(''); //Observações
 
   const [checked, setChecked] = useState('frist')
-  var formatH = 'HH:mm'
-  var formatD = 'DD/MM/YYYY'
+  const formatD = "DD/MM/YYYY";
+  const formatH = "HH:mm";
 
   const Refresh = () => {
     if(inReload){

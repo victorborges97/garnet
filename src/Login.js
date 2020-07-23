@@ -27,14 +27,6 @@ export default function Login({navigation}) {
   const [usuario,setUsuario] = useState('')
   const [password,setPassword] = useState('')
   const [time,setTime] =  useState(false)
-  const [focusPasswordInput,setfFocusPasswordInput] =  useState(false)
-  const [focusUserInput,setfFocusUserInput] =  useState(true)
-
-  function handleTitleInputSubmit() {
-    setfFocusUserInput(false)
-    setfFocusPasswordInput(true)
-    console.log(focusPasswordInput)
-  }
 
   //função para animação da imagem logo, que diminiu ela com o teclado abre
   function keyboardDidShow(){
@@ -180,7 +172,7 @@ export default function Login({navigation}) {
 
             <TouchableOpacity 
               style={styles.btnSubmit}
-              onPress={ () => inLoggin()/*navigation.navigate('Dashboard')*/}
+              onPress={ () => inLoggin()}
             > 
               {time
                 ?
