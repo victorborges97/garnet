@@ -84,17 +84,6 @@ export default function EditarSolicitacao({ route, navigation}) {
     setInReload(false)
   })
 
-  function formatHORA0(item) {
-    return(
-      item.map((hora,index) => moment.utc(hora).format(formatH))[0]
-    )
-  };
-  function formatHORA1(item) {
-    return(
-      item.map((hora,index) => moment.utc(hora).format(formatH))[1]
-    )
-  };
-
   function tempoHora(item) {
     const h = item.map((hora) => moment.utc(hora).format(formatH))
 
@@ -396,10 +385,10 @@ export default function EditarSolicitacao({ route, navigation}) {
                     <Text style={styles.TextTurno}>{tempoHora(horariofinal)}</Text>
                   </View>
                   <View style={styles.TextHeaderHorario2}>
-                    <Text style={styles.TextHorario}>{formatHORA0(horariofinal)}</Text>
+                    <Text style={styles.TextHorario}>{horariofinal.map((hora) => moment.utc(hora).format(formatH))[0]}</Text>
                   </View>
                   <View style={styles.TextHeaderHorario2}>
-                    <Text style={styles.TextHorario}>{formatHORA1(horariofinal)}</Text>
+                    <Text style={styles.TextHorario}>{horariofinal.map((hora) => moment.utc(hora).format(formatH))[1]}</Text>
                   </View>
                 </View>
               </View>
