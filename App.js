@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { AsyncStorage } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -8,6 +7,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 const Stack = createStackNavigator();
 
 import Login from './src/Login';
+
 //Rotas ADM
 import Dashboard from './src/pages/adm/dashboard/index';
 import Perfil from './src/pages/adm/perfil/index';
@@ -16,6 +16,7 @@ import Solicitacao from './src/pages/adm/solicitacoes/index';
 import EditarRecurso from './src/pages/adm/cadastro-recurso/ComponenteRecursos/editar/index';
 import CadastrarRecurso from './src/pages/adm/cadastro-recurso/ComponenteRecursos/cadastrar';
 import EditarSolicitacao from './src/pages/adm/solicitacoes/ComponenteRecursos/editar/index';
+
 //Rota PFV
 import DashboardPFV from './src/pages/pfv/dashboard/index';
 import PerfilPFV from './src/pages/pfv/perfil/index';

@@ -373,10 +373,10 @@ export default function EditarSolicitacao({ route, navigation}) {
                     <Text style={styles.TextTurno}>{tempoHora(horarioinicio)}</Text>
                   </View>
                   <View style={styles.TextHeaderHorario2}>
-                    <Text style={styles.TextHorario}>{formatHORA0(horarioinicio)}</Text>
+                    <Text style={styles.TextHorario}>{horarioinicio.map((hora,index) => moment.utc(hora).format(formatH))[0]}</Text>
                   </View>
                   <View style={styles.TextHeaderHorario2}>
-                    <Text style={styles.TextHorario}>{formatHORA1(horarioinicio)}</Text>
+                    <Text style={styles.TextHorario}>{horarioinicio.map((hora,index) => moment.utc(hora).format(formatH))[1]}</Text>
                   </View>
                 </View>
 
