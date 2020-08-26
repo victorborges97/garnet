@@ -103,6 +103,7 @@ export default function Login({navigation}) {
     })
     .done();//Não sei pra que.
   }
+  
   //Função para identificar se é professor ou adm
   function loginIdentific(identi) {
     if(identi === "1") {
@@ -112,6 +113,7 @@ export default function Login({navigation}) {
     }
   };
 
+  //
   useEffect(()=> {
     if (Platform.OS === "android") { 
       //aqui pegamos a informação quando o teclado abre(Show) e fecha(Hide)

@@ -34,7 +34,8 @@ export default function Solicitacao({ navigation: { goBack, navigate } }) {
 
   YellowBox.ignoreWarnings([
     'VirtualizedLists should never be nested', // TODO: Remove when fixed
-  ])
+  ]);
+
   const formatD = "DD/MM/YYYY";
   const formatH = "HH:mm";
 
@@ -159,7 +160,7 @@ export default function Solicitacao({ navigation: { goBack, navigate } }) {
     //recebo a resposta do server
     .then(res=>res.json())
     .then ((res) => {
-      setSolicitacoes(res.data)
+      setSolicitacoes(res)
       setInReload(false)
     })
   }

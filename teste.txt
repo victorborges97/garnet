@@ -1,0 +1,5 @@
+1º Node.js
+2º Esse arquivo Github - Apaga a pasta backend
+3º Instalar Dependencias - (npm install(pode no cmd mais dentro da pasta que esta esses arquivos)) Ctrl + "
+4º Instalar Expo CLI (npm install expo-cli --global)
+5º npm start

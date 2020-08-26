@@ -25,7 +25,7 @@ export default function Cadastro({ navigation: { goBack, navigate } }) {
   ])
 
   const [logo] = useState(new Animated.ValueXY({x: 244, y: 53}));
-  const [data,setData] = useState( );
+  const [data,setData] = useState([]);
   const [Name,setName] = useState('');
   const [inReload,setInReload] = useState(true);
   const [horario,setHorario] = useState('');
@@ -37,15 +37,9 @@ export default function Cadastro({ navigation: { goBack, navigate } }) {
   });
 
   useEffect(() => {
+    BuscarRecursos()
     Horario()
-    refresh()
-  },[refresh]);
-
-  function refresh() {
-    if(inReload) {
-      BuscarRecursos()
-    }
-  }
+  },[]);
 
   function BuscarRecursos() {
     //o ip vai mudar dependendo do ip da maquina que for roda o server
@@ -59,8 +53,8 @@ export default function Cadastro({ navigation: { goBack, navigate } }) {
     //recebo a resposta do server
     .then(res=>res.json())
     .then ((res) => {
-      setData(res.data)
-      console.log(data)
+      setData(res)
+      console.log(res)
       setInReload(false)
     })
   }
@@ -124,7 +118,7 @@ export default function Cadastro({ navigation: { goBack, navigate } }) {
             Gestor Acadêmico Redentor - Itaperuna
           </Text>
           <Text style={styles.textHeader2}>
-            {horario}, {Name}
+            {horario}, {Name} 
           </Text>
         </View>
 
