@@ -120,7 +120,7 @@ export default function Login({navigation}) {
       keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', keyboardDidShow)
       keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', keyboardDidHide)
     }
-  })
+  },[])
 
   
   return (
