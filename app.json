@@ -1,0 +1,33 @@
+{
+  "expo": {
+    "name": "Garnet",
+    "slug": "garnet-expo-38",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0B6E74"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "android": {
+      "package": "io.expo.client",
+      "adaptiveIcon": {
+        "backgroundColor": "#0B6E74",
+        "foregroundImage": "./assets/icon.png"
+      }
+    }
+  }
+}
