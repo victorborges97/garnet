@@ -1,11 +1,11 @@
 import axios from "axios";
 import { AsyncStorage } from "react-native";
 
-export const URL = "https://api-garnet.herokuapp.com";
-// export const URL = "http://192.168.0.109:3000";
+// export const URL = "https://api-garnet.herokuapp.com";
+export const URL = "http://192.168.0.148:3000";
 
 const apiaxios = axios.create({
-  baseURL: "https://api-garnet.herokuapp.com",
+  baseURL: URL,
 });
 
 apiaxios.interceptors.request.use(async (config) => {
